@@ -1,0 +1,315 @@
+.mood-tracker-container {
+  background: white;
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-lg);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.mood-tracker-container h1 {
+  color: var(--primary-600);
+  margin-bottom: var(--spacing-lg);
+  font-size: calc(var(--text-2xl) + 0.5vw);
+}
+
+.mood-input-section {
+  background: var(--neutral-50);
+  padding: var(--spacing-lg);
+  border-radius: var(--radius-lg);
+  margin-bottom: var(--spacing-xl);
+}
+
+.mood-input-section h2 {
+  margin-bottom: var(--spacing-lg);
+  color: var(--neutral-800);
+  font-size: calc(var(--text-xl) + 0.3vw);
+}
+
+.mood-selector {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-lg);
+  flex-wrap: wrap;
+}
+
+.mood-button {
+  flex: 1;
+  min-width: 100px;
+  padding: var(--spacing-md);
+  border-radius: var(--radius-md);
+  background: white;
+  border: 2px solid var(--neutral-200);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: all 0.2s ease;
+}
+
+.mood-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.mood-button.selected {
+  border-color: var(--primary-400);
+  background-color: var(--primary-50);
+}
+
+.mood-emoji {
+  font-size: 2rem;
+  margin-bottom: var(--spacing-xs);
+}
+
+.mood-label {
+  font-size: 0.9rem;
+  color: var(--neutral-700);
+}
+
+.mood-note {
+  width: 100%;
+  min-height: 100px;
+  padding: var(--spacing-md);
+  border: 1px solid var(--neutral-300);
+  border-radius: var(--radius-md);
+  margin-bottom: var(--spacing-lg);
+  font-family: var(--font-body);
+  resize: vertical;
+}
+
+.mood-note:focus {
+  outline: none;
+  border-color: var(--primary-400);
+  box-shadow: 0 0 0 3px var(--primary-100);
+}
+
+.save-mood-btn {
+  background-color: var(--primary-500);
+  color: white;
+  padding: var(--spacing-md) var(--spacing-lg);
+  border-radius: var(--radius-md);
+  font-weight: 500;
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
+  display: block;
+}
+
+.save-mood-btn:hover {
+  background-color: var(--primary-600);
+}
+
+.mood-visualization {
+  margin-top: var(--spacing-xl);
+}
+
+.mood-visualization h2 {
+  margin-bottom: var(--spacing-lg);
+  color: var(--neutral-800);
+  font-size: calc(var(--text-xl) + 0.3vw);
+}
+
+.mood-chart {
+  display: flex;
+  margin-bottom: var(--spacing-xl);
+  height: 300px;
+  position: relative;
+  overflow-x: auto;
+  padding-bottom: var(--spacing-md);
+}
+
+.mood-chart-labels {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding-right: var(--spacing-md);
+  height: 100%;
+  flex-shrink: 0;
+}
+
+.mood-level {
+  font-size: 1.5rem;
+  height: 20%;
+  display: flex;
+  align-items: center;
+}
+
+.mood-chart-grid {
+  flex-grow: 1;
+  min-width: 600px;
+  display: grid;
+  grid-template-columns: repeat(14, 1fr);
+  border: 1px solid var(--neutral-200);
+  border-radius: var(--radius-md);
+  position: relative;
+  background: linear-gradient(
+    to bottom,
+    var(--neutral-100) 0%,
+    var(--neutral-100) 20%,
+    var(--neutral-50) 20%,
+    var(--neutral-50) 40%,
+    var(--neutral-100) 40%,
+    var(--neutral-100) 60%,
+    var(--neutral-50) 60%,
+    var(--neutral-50) 80%,
+    var(--neutral-100) 80%,
+    var(--neutral-100) 100%
+  );
+}
+
+.mood-chart-day {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  padding-bottom: var(--spacing-md);
+  height: 100%;
+}
+
+.chart-day-date {
+  position: absolute;
+  bottom: 0;
+  font-size: 0.7rem;
+  color: var(--neutral-600);
+  transform: rotate(-45deg);
+  transform-origin: top left;
+  width: 30px;
+  text-align: left;
+}
+
+.mood-point {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  position: absolute;
+  transform: translate(-50%, 50%);
+}
+
+.mood-entries-list {
+  margin-top: var(--spacing-xl);
+}
+
+.mood-entries-list h3 {
+  margin-bottom: var(--spacing-md);
+  color: var(--neutral-800);
+}
+
+.mood-entry-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: var(--spacing-md);
+}
+
+.mood-entry-card {
+  background: var(--neutral-50);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-md);
+  margin-bottom: var(--spacing-md);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.mood-entry-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.mood-entry-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--spacing-xs);
+}
+
+.mood-entry-emoji {
+  font-size: 1.2rem;
+  margin-right: var(--spacing-xs);
+}
+
+.mood-entry-date {
+  font-size: 0.8rem;
+  color: var(--neutral-500);
+}
+
+.mood-entry-note {
+  margin: 0;
+  color: var(--neutral-700);
+  font-size: 0.9rem;
+}
+
+.empty-state {
+  text-align: center;
+  padding: var(--spacing-xl) 0;
+  color: var(--neutral-500);
+}
+
+/* Responsive layout */
+@media (max-width: 1024px) {
+  .mood-tracker-container {
+    padding: var(--spacing-md);
+  }
+  
+  .mood-chart {
+    height: 250px;
+  }
+}
+
+@media (max-width: 768px) {
+  .mood-selector {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  .mood-button {
+    flex: 0 0 calc(33.333% - var(--spacing-md));
+    min-width: 80px;
+  }
+  
+  .chart-day-date {
+    font-size: 0.6rem;
+  }
+  
+  .mood-entry-cards {
+    grid-template-columns: 1fr;
+  }
+  
+  .save-mood-btn {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .mood-tracker-container {
+    padding: var(--spacing-sm);
+    border-radius: var(--radius-md);
+  }
+  
+  .mood-input-section {
+    padding: var(--spacing-md);
+    border-radius: var(--radius-md);
+  }
+  
+  .mood-button {
+    flex: 0 0 calc(50% - var(--spacing-sm));
+    min-width: 0;
+    padding: var(--spacing-sm);
+  }
+  
+  .mood-emoji {
+    font-size: 1.5rem;
+  }
+  
+  .mood-label {
+    font-size: 0.8rem;
+  }
+  
+  .mood-chart {
+    margin-bottom: var(--spacing-lg);
+    height: 200px;
+  }
+  
+  .mood-level {
+    font-size: 1.2rem;
+  }
+}
