@@ -77,7 +77,7 @@ router.post('/login', loginValidation, validate, async (req, res, next) => {
 
 /**
  * @route   POST /api/auth/google
- * @desc    Login or register with Google OAuth
+ * @desc    Login or register with Google OAuth (using ID token)
  * @access  Public
  */
 router.post('/google', googleAuthValidation, validate, async (req, res, next) => {
@@ -86,6 +86,55 @@ router.post('/google', googleAuthValidation, validate, async (req, res, next) =>
     
     // Verify Google token and get user info
     const googleUser = await authService.verifyGoogleToken(idToken);
+    
+    // Authenticate or create user
+    const result = await authService.googleAuth(googleUser);
+
+    // Set refresh token in httpOnly cookie
+    res.cookie('refreshToken', result.refreshToken, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'lax',
+      maxAge: 30 * 24 * 60 * 60 * 1000 // 30 days
+    });
+
+    res.json({
+      success: true,
+      message: 'Google authentication successful',
+      data: {
+        user: result.user,
+        accessToken: result.accessToken
+      }
+    });
+  } catch (error) {
+    next(error);
+  }
+});
+
+/**
+ * @route   POST /api/auth/google/userinfo
+ * @desc    Login or register with Google OAuth (using user info from access token)
+ * @access  Public
+ */
+router.post('/google/userinfo', async (req, res, next) => {
+  try {
+    const { googleId, email, name, avatar } = req.body;
+    
+    // Validate required fields
+    if (!googleId || !email) {
+      return res.status(400).json({
+        success: false,
+        message: 'Google ID and email are required'
+      });
+    }
+    
+    // Create google user object
+    const googleUser = {
+      googleId,
+      email,
+      name: name || email.split('@')[0],
+      avatar
+    };
     
     // Authenticate or create user
     const result = await authService.googleAuth(googleUser);
