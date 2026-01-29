@@ -55,14 +55,14 @@ export default function Sidebar() {
     const handleResize = () => {
       const width = window.innerWidth;
       setWindowWidth(width);
-      
+
       // Auto-collapse on tablet
       if (width < 1024 && width >= 768) {
         setCollapsed(true);
       } else if (width >= 1024) {
         setCollapsed(false);
       }
-      
+
       // Close mobile sidebar on resize to desktop
       if (width >= 768) {
         setMobileOpen(false);
@@ -172,7 +172,7 @@ export default function Sidebar() {
           {navItems.map((item) => {
             const Icon = item.icon;
             const isActive = location.pathname === item.path;
-            
+
             return (
               <Link
                 key={item.path}

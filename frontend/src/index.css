@@ -3,6 +3,9 @@
  * Base styles, reset, and typography
  */
 
+/* Import Design System */
+@import './styles/theme.css';
+
 /* ============================================
    CSS Reset & Base Styles
    ============================================ */

@@ -235,6 +235,56 @@
   --container-max: 1280px;
 }
 
+/* ==========================================
+     BACKWARD COMPATIBILITY ALIASES
+     (For older components that use legacy names)
+     ========================================== */
+  
+  /* Legacy Neutral Colors */
+  --neutral-50: var(--gray-50);
+  --neutral-100: var(--gray-100);
+  --neutral-200: var(--gray-200);
+  --neutral-300: var(--gray-300);
+  --neutral-400: var(--gray-400);
+  --neutral-500: var(--gray-500);
+  --neutral-600: var(--gray-600);
+  --neutral-700: var(--gray-700);
+  --neutral-800: var(--gray-800);
+  --neutral-900: var(--gray-900);
+
+  /* Legacy Background Names */
+  --bg-primary: var(--bg-surface);
+  --bg-secondary: var(--bg-surface-secondary);
+  --bg-tertiary: var(--bg-surface-tertiary);
+
+  /* Legacy Border Names */
+  --border-light: var(--border-default);
+  --border-medium: var(--border-strong);
+
+  /* Legacy Spacing (spacing-* to space-*) */
+  --spacing-xs: var(--space-1);
+  --spacing-sm: var(--space-2);
+  --spacing-md: var(--space-4);
+  --spacing-lg: var(--space-6);
+  --spacing-xl: var(--space-8);
+  --spacing-2xl: var(--space-12);
+
+  /* Legacy Feature Backgrounds */
+  --journal-light: var(--journal-bg);
+  --habit-light: var(--habit-bg);
+  --mood-light: var(--mood-bg);
+
+  /* Legacy Gradient */
+  --gradient-primary: linear-gradient(135deg, var(--primary-500), var(--primary-600));
+
+  /* Legacy Transition */
+  --transition-normal: var(--transition-base);
+  --easing-default: var(--ease-out);
+
+  /* Legacy Font */
+  --font-body: var(--font-sans);
+}
+
 /* Responsive adjustments */
 @media (max-width: 768px) {
   :root {
