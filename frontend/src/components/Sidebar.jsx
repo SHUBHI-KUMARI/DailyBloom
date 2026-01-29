@@ -2,15 +2,18 @@ import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import {
-  FaHome,
-  FaBook,
-  FaCheckSquare,
-  FaSmile,
-  FaCalendarAlt,
-  FaBars,
-  FaTimes,
-} from "react-icons/fa";
-import { FiLogOut, FiChevronLeft, FiChevronRight } from "react-icons/fi";
+  HiHome,
+  HiBookOpen,
+  HiClipboardCheck,
+  HiHeart,
+  HiCalendar,
+  HiMenuAlt2,
+  HiX,
+  HiLogout,
+  HiChevronLeft,
+  HiChevronRight,
+} from "react-icons/hi";
+import { RiLeafLine } from "react-icons/ri";
 import "../styles/Sidebar.css";
 
 export default function Sidebar() {
@@ -74,17 +77,17 @@ export default function Sidebar() {
   return (
     <>
       <button className="mobile-menu-button" onClick={toggleMobileSidebar}>
-        {mobileOpen ? <FaTimes /> : <FaBars />}
+        {mobileOpen ? <HiX /> : <HiMenuAlt2 />}
       </button>
 
       <aside className={sidebarClass}>
         <div className="sidebar-header">
           <div className="logo-container">
-            <span className="logo">🌱</span>
+            <RiLeafLine className="logo-icon" />
             <span className="logo-text">DailyBloom</span>
           </div>
           <button className="collapse-btn" onClick={toggleSidebar}>
-            {collapsed ? <FiChevronRight /> : <FiChevronLeft />}
+            {collapsed ? <HiChevronRight /> : <HiChevronLeft />}
           </button>
         </div>
 
@@ -96,16 +99,7 @@ export default function Sidebar() {
               className="profile-pic"
             />
           ) : (
-            <div
-              className="profile-pic"
-              style={{
-                background: "var(--primary-600)",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                color: "white",
-              }}
-            >
+            <div className="profile-pic profile-initials">
               {getUserInitials()}
             </div>
           )}
@@ -123,7 +117,7 @@ export default function Sidebar() {
             onClick={closeMobileSidebar}
           >
             <span className="nav-icon">
-              <FaHome />
+              <HiHome />
             </span>
             <span className="nav-text">Dashboard</span>
           </Link>
@@ -133,7 +127,7 @@ export default function Sidebar() {
             onClick={closeMobileSidebar}
           >
             <span className="nav-icon">
-              <FaBook />
+              <HiBookOpen />
             </span>
             <span className="nav-text">Journal</span>
           </Link>
@@ -143,7 +137,7 @@ export default function Sidebar() {
             onClick={closeMobileSidebar}
           >
             <span className="nav-icon">
-              <FaCheckSquare />
+              <HiClipboardCheck />
             </span>
             <span className="nav-text">Habits</span>
           </Link>
@@ -153,7 +147,7 @@ export default function Sidebar() {
             onClick={closeMobileSidebar}
           >
             <span className="nav-icon">
-              <FaSmile />
+              <HiHeart />
             </span>
             <span className="nav-text">Mood</span>
           </Link>
@@ -163,7 +157,7 @@ export default function Sidebar() {
             onClick={closeMobileSidebar}
           >
             <span className="nav-icon">
-              <FaCalendarAlt />
+              <HiCalendar />
             </span>
             <span className="nav-text">Calendar</span>
           </Link>
@@ -172,7 +166,7 @@ export default function Sidebar() {
         <div className="sidebar-footer">
           <button className="logout-btn" onClick={handleLogout}>
             <span className="logout-icon">
-              <FiLogOut />
+              <HiLogout />
             </span>
             <span className="logout-text">Logout</span>
           </button>
