@@ -1,3 +1,7 @@
+/* =============================================
+   Rich Text Editor - Fresh Modern Design
+   ============================================= */
+
 .rich-text-editor {
   display: flex;
   flex-direction: column;
@@ -12,61 +16,98 @@
   overflow: hidden;
 }
 
+/* Editor Container */
 .rich-text-editor .ql-container {
   flex: 1;
   overflow: auto;
-  font-family: 'Lora', serif;
+  font-family: var(--font-body);
   font-size: var(--text-base);
-  color: var(--neutral-800);
+  color: var(--text-primary);
+  border: none;
 }
 
 .rich-text-editor .ql-editor {
-  min-height: 200px;
-  padding: var(--spacing-lg);
-  line-height: 1.7;
+  min-height: 300px;
+  padding: var(--space-6);
+  line-height: var(--leading-relaxed);
 }
 
+.rich-text-editor .ql-editor:focus {
+  outline: none;
+}
+
+.rich-text-editor .ql-editor.ql-blank::before {
+  color: var(--text-muted);
+  font-style: normal;
+}
+
+/* Toolbar */
 .rich-text-editor .ql-toolbar {
-  border-top: none;
-  border-left: none;
-  border-right: none;
-  border-bottom: 1px solid var(--neutral-200);
-  padding: var(--spacing-sm) var(--spacing-md);
-  background: var(--neutral-50);
+  border: none;
+  border-bottom: 1px solid var(--border-default);
+  padding: var(--space-3) var(--space-4);
+  background: var(--bg-surface-secondary);
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
+  gap: var(--space-2);
 }
 
 .rich-text-editor .ql-formats {
   display: flex;
   flex-wrap: wrap;
-  margin-right: var(--spacing-xs);
-  margin-bottom: var(--spacing-xs);
+  gap: var(--space-1);
+  margin: 0;
 }
 
 .rich-text-editor .ql-toolbar button {
-  margin: 2px;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-lg);
+  transition: all var(--transition-fast);
 }
 
 .rich-text-editor .ql-toolbar button:hover {
+  background: var(--bg-surface);
   color: var(--primary-600);
 }
 
 .rich-text-editor .ql-toolbar button.ql-active {
-  color: var(--primary-600);
+  background: var(--primary-100);
+  color: var(--primary-700);
 }
 
+.rich-text-editor .ql-toolbar .ql-picker {
+  height: 32px;
+}
+
+.rich-text-editor .ql-toolbar .ql-picker-label {
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  padding: var(--space-1) var(--space-2);
+}
+
+.rich-text-editor .ql-toolbar .ql-picker-label:hover {
+  color: var(--primary-600);
+  border-color: var(--primary-300);
+}
+
+/* Editor Content Styling */
 .rich-text-editor .ql-editor p {
-  margin-bottom: var(--spacing-md);
+  margin-bottom: var(--space-4);
 }
 
 .rich-text-editor .ql-editor h1,
 .rich-text-editor .ql-editor h2,
 .rich-text-editor .ql-editor h3 {
-  margin-top: var(--spacing-lg);
-  margin-bottom: var(--spacing-md);
-  color: var(--neutral-900);
+  margin-top: var(--space-6);
+  margin-bottom: var(--space-4);
+  color: var(--text-primary);
+  font-weight: var(--font-bold);
+  letter-spacing: -0.02em;
 }
 
 .rich-text-editor .ql-editor h1 {
@@ -82,63 +123,98 @@
 }
 
 .rich-text-editor .ql-editor blockquote {
-  border-left: 4px solid var(--primary-300);
-  padding-left: var(--spacing-md);
-  color: var(--neutral-600);
+  border-left: 4px solid var(--primary-400);
+  padding-left: var(--space-4);
+  margin: var(--space-4) 0;
+  color: var(--text-secondary);
   font-style: italic;
+  background: var(--bg-surface-secondary);
+  padding: var(--space-4);
+  border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
 }
 
 .rich-text-editor .ql-editor ul,
 .rich-text-editor .ql-editor ol {
-  padding-left: var(--spacing-lg);
-  margin-bottom: var(--spacing-md);
+  padding-left: var(--space-6);
+  margin-bottom: var(--space-4);
+}
+
+.rich-text-editor .ql-editor li {
+  margin-bottom: var(--space-2);
 }
 
 .rich-text-editor .ql-editor a {
   color: var(--primary-600);
   text-decoration: none;
+  transition: color var(--transition-fast);
 }
 
 .rich-text-editor .ql-editor a:hover {
+  color: var(--primary-700);
   text-decoration: underline;
 }
 
-.rich-text-editor .ql-tooltip {
+.rich-text-editor .ql-editor code {
+  background: var(--bg-surface-secondary);
+  padding: var(--space-1) var(--space-2);
   border-radius: var(--radius-md);
-  box-shadow: var(--shadow-md);
-  border: none;
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+}
+
+.rich-text-editor .ql-editor pre {
+  background: var(--neutral-800);
+  color: var(--neutral-100);
+  padding: var(--space-4);
+  border-radius: var(--radius-lg);
+  overflow-x: auto;
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+}
+
+/* Tooltip */
+.rich-text-editor .ql-tooltip {
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-lg);
+  border: 1px solid var(--border-default);
+  background: var(--bg-surface);
+  padding: var(--space-3);
   z-index: 100;
 }
 
 .rich-text-editor .ql-tooltip input[type=text] {
-  border-radius: var(--radius-sm);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-default);
+  padding: var(--space-2) var(--space-3);
 }
 
-/* Mobile responsiveness */
+/* =============================================
+   Responsive Styles
+   ============================================= */
+
 @media (max-width: 768px) {
   .rich-text-editor .ql-editor {
-    padding: var(--spacing-md);
-    font-size: 15px;
+    padding: var(--space-4);
+    font-size: var(--text-base);
+    min-height: 250px;
   }
   
   .rich-text-editor .ql-toolbar {
-    padding: var(--spacing-xs) var(--spacing-sm);
-  }
-  
-  .rich-text-editor .ql-formats {
-    margin-right: 2px;
+    padding: var(--space-2) var(--space-3);
+    justify-content: center;
   }
   
   .rich-text-editor .ql-toolbar button {
-    margin: 1px;
+    width: 28px;
+    height: 28px;
   }
 }
 
 @media (max-width: 480px) {
   .rich-text-editor .ql-editor {
-    padding: var(--spacing-sm);
-    min-height: 150px;
-    font-size: 14px;
+    padding: var(--space-3);
+    min-height: 200px;
+    font-size: var(--text-sm);
   }
   
   .rich-text-editor .ql-editor h1 {
@@ -151,14 +227,5 @@
   
   .rich-text-editor .ql-editor h3 {
     font-size: var(--text-base);
-  }
-  
-  .rich-text-editor .ql-formats {
-    margin-bottom: 2px;
-  }
-  
-  /* Hide less essential toolbar buttons on very small screens */
-  .rich-text-editor .ql-toolbar .ql-formats:nth-child(n+4):nth-child(-n+5) {
-    display: none;
   }
 }
