@@ -2,6 +2,20 @@ import { useState, useEffect, useCallback } from "react";
 import { useAuth } from "../contexts/AuthContext";
 import Sidebar from "../components/Sidebar";
 import { moodAPI } from "../services/api";
+import {
+  HiOutlineEmojiHappy,
+  HiOutlineEmojiSad,
+  HiOutlineMinus,
+  HiOutlineHeart,
+  HiOutlineCalendar,
+} from "react-icons/hi";
+import {
+  BsEmojiLaughing,
+  BsEmojiSmile,
+  BsEmojiNeutral,
+  BsEmojiFrown,
+  BsEmojiAngry,
+} from "react-icons/bs";
 import "../styles/MoodTracker.css";
 
 export default function MoodTracker() {
@@ -58,11 +72,36 @@ export default function MoodTracker() {
   };
 
   const moods = [
-    { value: "great", label: "Great", emoji: "😄" },
-    { value: "good", label: "Good", emoji: "🙂" },
-    { value: "neutral", label: "Neutral", emoji: "😐" },
-    { value: "bad", label: "Bad", emoji: "☹️" },
-    { value: "awful", label: "Awful", emoji: "😞" },
+    {
+      value: "great",
+      label: "Great",
+      icon: BsEmojiLaughing,
+      color: "var(--mood-great)",
+    },
+    {
+      value: "good",
+      label: "Good",
+      icon: BsEmojiSmile,
+      color: "var(--mood-good)",
+    },
+    {
+      value: "neutral",
+      label: "Neutral",
+      icon: BsEmojiNeutral,
+      color: "var(--mood-neutral)",
+    },
+    {
+      value: "bad",
+      label: "Bad",
+      icon: BsEmojiFrown,
+      color: "var(--mood-bad)",
+    },
+    {
+      value: "awful",
+      label: "Awful",
+      icon: BsEmojiAngry,
+      color: "var(--mood-awful)",
+    },
   ];
 
   const formatDate = (dateString) => {
@@ -103,21 +142,28 @@ export default function MoodTracker() {
       <Sidebar />
       <main className="dashboard-content">
         <div className="mood-tracker-container">
-          <h1>Mood Tracker</h1>
+          <div className="page-header">
+            <h1>Mood Tracker</h1>
+            <p className="page-subtitle">Understand your emotional patterns</p>
+          </div>
 
           <div className="mood-input-section">
             <h2>How are you feeling today?</h2>
             <div className="mood-selector">
-              {moods.map((mood) => (
-                <button
-                  key={mood.value}
-                  className={`mood-button ${selectedMood === mood.value ? "selected" : ""}`}
-                  onClick={() => setSelectedMood(mood.value)}
-                >
-                  <span className="mood-emoji">{mood.emoji}</span>
-                  <span className="mood-label">{mood.label}</span>
-                </button>
-              ))}
+              {moods.map((mood) => {
+                const IconComponent = mood.icon;
+                return (
+                  <button
+                    key={mood.value}
+                    className={`mood-button ${selectedMood === mood.value ? "selected" : ""}`}
+                    onClick={() => setSelectedMood(mood.value)}
+                    style={{ "--mood-color": mood.color }}
+                  >
+                    <IconComponent className="mood-icon" />
+                    <span className="mood-label">{mood.label}</span>
+                  </button>
+                );
+              })}
             </div>
 
             <textarea
@@ -128,6 +174,7 @@ export default function MoodTracker() {
             />
 
             <button onClick={handleMoodSubmit} className="save-mood-btn">
+              <HiOutlineHeart />
               Log My Mood
             </button>
           </div>
@@ -136,21 +183,27 @@ export default function MoodTracker() {
             <h2>Your Mood History</h2>
 
             {loading ? (
-              <p>Loading mood data...</p>
+              <div className="loading-state">Loading mood data...</div>
             ) : moodEntries.length === 0 ? (
               <div className="empty-state">
+                <HiOutlineEmojiHappy className="empty-icon" />
                 <p>You haven't logged any moods yet.</p>
-                <p>Start tracking your moods to see your patterns over time.</p>
+                <span>
+                  Start tracking your moods to see your patterns over time.
+                </span>
               </div>
             ) : (
               <>
                 <div className="mood-chart">
                   <div className="mood-chart-labels">
-                    {moods.map((mood) => (
-                      <div key={mood.value} className="mood-level">
-                        {mood.emoji}
-                      </div>
-                    ))}
+                    {moods.map((mood) => {
+                      const IconComponent = mood.icon;
+                      return (
+                        <div key={mood.value} className="mood-level">
+                          <IconComponent style={{ color: mood.color }} />
+                        </div>
+                      );
+                    })}
                   </div>
 
                   <div className="mood-chart-grid">
@@ -178,10 +231,9 @@ export default function MoodTracker() {
                             <div
                               className="mood-point"
                               style={{
-                                bottom: `${(averageMood / (moods.length - 1)) * 100}%`,
-                                backgroundColor: getMoodColor(
-                                  moods[Math.round(averageMood)].value,
-                                ),
+                                bottom: `${(1 - averageMood / (moods.length - 1)) * 100}%`,
+                                backgroundColor:
+                                  moods[Math.round(averageMood)].color,
                               }}
                             />
                           )}
@@ -193,22 +245,29 @@ export default function MoodTracker() {
 
                 <div className="mood-entries-list">
                   <h3>Recent Entries</h3>
-                  {moodEntries.slice(0, 10).map((entry) => {
-                    const mood = moods.find((m) => m.value === entry.mood);
-                    return (
-                      <div key={entry.id} className="mood-entry-card">
-                        <div className="mood-entry-header">
-                          <span className="mood-entry-emoji">{mood.emoji}</span>
-                          <span className="mood-entry-date">
-                            {formatDate(entry.date)}
-                          </span>
+                  <div className="mood-entry-cards">
+                    {moodEntries.slice(0, 10).map((entry) => {
+                      const mood = moods.find((m) => m.value === entry.mood);
+                      const IconComponent = mood?.icon || BsEmojiNeutral;
+                      return (
+                        <div key={entry.id} className="mood-entry-card">
+                          <div className="mood-entry-header">
+                            <IconComponent
+                              className="mood-entry-icon"
+                              style={{ color: mood?.color }}
+                            />
+                            <span className="mood-entry-date">
+                              <HiOutlineCalendar />
+                              {formatDate(entry.date)}
+                            </span>
+                          </div>
+                          {entry.note && (
+                            <p className="mood-entry-note">{entry.note}</p>
+                          )}
                         </div>
-                        {entry.note && (
-                          <p className="mood-entry-note">{entry.note}</p>
-                        )}
-                      </div>
-                    );
-                  })}
+                      );
+                    })}
+                  </div>
                 </div>
               </>
             )}
