@@ -2,6 +2,14 @@ import { useState, useEffect } from "react";
 import { useAuth } from "../contexts/AuthContext";
 import Sidebar from "../components/Sidebar";
 import { moodAPI } from "../services/api";
+import {
+  HiOutlineChevronLeft,
+  HiOutlineChevronRight,
+  HiOutlineX,
+  HiOutlineBookOpen,
+  HiOutlineClipboardCheck,
+  HiOutlineHeart,
+} from "react-icons/hi";
 import "../styles/Calendar.css";
 
 export default function Calendar() {
@@ -164,22 +172,25 @@ export default function Calendar() {
       <main className="dashboard-content">
         <div className="calendar-container">
           <div className="calendar-header">
-            <h1>Calendar View</h1>
+            <div className="page-header">
+              <h1>Calendar View</h1>
+              <p className="page-subtitle">Track your journey at a glance</p>
+            </div>
             <div className="calendar-navigation">
               <button onClick={handlePrevMonth} className="month-nav-btn">
-                &#8249; Prev
+                <HiOutlineChevronLeft />
               </button>
               <h2 className="current-month">
                 {monthNames[currentDate.getMonth()]} {currentDate.getFullYear()}
               </h2>
               <button onClick={handleNextMonth} className="month-nav-btn">
-                Next &#8250;
+                <HiOutlineChevronRight />
               </button>
             </div>
           </div>
 
           {loading ? (
-            <p>Loading calendar data...</p>
+            <div className="loading-state">Loading calendar data...</div>
           ) : (
             <div className="calendar-grid">
               {weekdays.map((day) => (
@@ -203,13 +214,19 @@ export default function Calendar() {
                       <div className="day-number">{day.day}</div>
                       <div className="day-indicators">
                         {day.journals.length > 0 && (
-                          <div className="journal-indicator" />
+                          <div
+                            className="journal-indicator"
+                            title="Journal entries"
+                          />
                         )}
                         {day.habits.length > 0 && (
-                          <div className="habit-indicator" />
+                          <div
+                            className="habit-indicator"
+                            title="Habits completed"
+                          />
                         )}
                         {day.moods.length > 0 && (
-                          <div className="mood-indicator" />
+                          <div className="mood-indicator" title="Mood logged" />
                         )}
                       </div>
                     </>
@@ -233,7 +250,7 @@ export default function Calendar() {
                   onClick={closeEventSidebar}
                   className="close-sidebar-btn"
                 >
-                  ×
+                  <HiOutlineX />
                 </button>
               </div>
 
@@ -243,35 +260,44 @@ export default function Calendar() {
                 <div className="events-list">
                   {dayEvents.map((event, idx) => (
                     <div key={idx} className={`event-item ${event.type}-event`}>
-                      <div className="event-time">
-                        {event.time.toLocaleTimeString(undefined, {
-                          hour: "2-digit",
-                          minute: "2-digit",
-                        })}
+                      <div className="event-icon">
+                        {event.type === "journal" && <HiOutlineBookOpen />}
+                        {event.type === "habit" && <HiOutlineClipboardCheck />}
+                        {event.type === "mood" && <HiOutlineHeart />}
                       </div>
-
-                      {event.type === "journal" && (
-                        <div className="journal-event-content">
-                          <h4>📝 Journal Entry: {event.data.title}</h4>
+                      <div className="event-content">
+                        <div className="event-time">
+                          {event.time.toLocaleTimeString(undefined, {
+                            hour: "2-digit",
+                            minute: "2-digit",
+                          })}
                         </div>
-                      )}
 
-                      {event.type === "habit" && (
-                        <div className="habit-event-content">
-                          <h4>✅ Habit Completed: {event.data.name}</h4>
-                        </div>
-                      )}
+                        {event.type === "journal" && (
+                          <div className="event-details">
+                            <h4>Journal Entry</h4>
+                            <p>{event.data.title}</p>
+                          </div>
+                        )}
 
-                      {event.type === "mood" && (
-                        <div className="mood-event-content">
-                          <h4>
-                            😊 Mood:{" "}
-                            {event.data.mood.charAt(0).toUpperCase() +
-                              event.data.mood.slice(1)}
-                          </h4>
-                          {event.data.note && <p>{event.data.note}</p>}
-                        </div>
-                      )}
+                        {event.type === "habit" && (
+                          <div className="event-details">
+                            <h4>Habit Completed</h4>
+                            <p>{event.data.name}</p>
+                          </div>
+                        )}
+
+                        {event.type === "mood" && (
+                          <div className="event-details">
+                            <h4>
+                              Mood:{" "}
+                              {event.data.mood.charAt(0).toUpperCase() +
+                                event.data.mood.slice(1)}
+                            </h4>
+                            {event.data.note && <p>{event.data.note}</p>}
+                          </div>
+                        )}
+                      </div>
                     </div>
                   ))}
                 </div>
