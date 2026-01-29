@@ -3,6 +3,14 @@ import { Link } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import Sidebar from "../components/Sidebar";
 import { journalAPI, habitAPI, moodAPI } from "../services/api";
+import {
+  HiOutlineBookOpen,
+  HiOutlineClipboardCheck,
+  HiOutlineLightningBolt,
+  HiOutlineHeart,
+  HiArrowRight,
+  HiOutlineRefresh,
+} from "react-icons/hi";
 import "../styles/Dashboard.css";
 
 export default function Dashboard() {
@@ -103,63 +111,102 @@ export default function Dashboard() {
       <Sidebar />
       <main className="dashboard-content">
         {loading ? (
-          <div className="loading-spinner">Loading your dashboard...</div>
+          <div className="loading-container">
+            <div className="loading-spinner"></div>
+            <p>Loading your dashboard...</p>
+          </div>
         ) : error ? (
-          <div className="error-message">
+          <div className="error-container">
             <p>{error}</p>
-            <button onClick={fetchDashboardData}>Retry</button>
+            <button onClick={fetchDashboardData} className="retry-btn">
+              <HiOutlineRefresh />
+              Retry
+            </button>
           </div>
         ) : (
           <>
             <div className="welcome-banner">
-              <h1>Welcome back, {currentUser?.name || "there"}</h1>
-              <p>{formatDate()}</p>
+              <div className="welcome-content">
+                <h1>Welcome back, {currentUser?.name || "there"}</h1>
+                <p className="welcome-date">{formatDate()}</p>
+              </div>
             </div>
 
             <section className="dashboard-overview">
-              <h2>Overview</h2>
+              <div className="section-header">
+                <h2>Overview</h2>
+              </div>
               <div className="stats-grid">
                 <div className="stat-card journal-stat">
-                  <h3>Journal Entries</h3>
-                  <p className="stat-number">{dashboardData.journalCount}</p>
-                  <p>Total entries</p>
+                  <div className="stat-icon">
+                    <HiOutlineBookOpen />
+                  </div>
+                  <div className="stat-info">
+                    <p className="stat-number">{dashboardData.journalCount}</p>
+                    <h3>Journal Entries</h3>
+                    <p className="stat-label">Total entries</p>
+                  </div>
                 </div>
 
                 <div className="stat-card habit-stat">
-                  <h3>Habits</h3>
-                  <p className="stat-number">
-                    {dashboardData.completedHabits}/{dashboardData.totalHabits}
-                  </p>
-                  <p>Completed today</p>
+                  <div className="stat-icon">
+                    <HiOutlineClipboardCheck />
+                  </div>
+                  <div className="stat-info">
+                    <p className="stat-number">
+                      {dashboardData.completedHabits}/
+                      {dashboardData.totalHabits}
+                    </p>
+                    <h3>Habits</h3>
+                    <p className="stat-label">Completed today</p>
+                  </div>
                 </div>
 
                 <div className="stat-card streak-stat">
-                  <h3>Current Streak</h3>
-                  <p className="stat-number">{dashboardData.streakCount}</p>
-                  <p>Days in a row</p>
+                  <div className="stat-icon">
+                    <HiOutlineLightningBolt />
+                  </div>
+                  <div className="stat-info">
+                    <p className="stat-number">{dashboardData.streakCount}</p>
+                    <h3>Current Streak</h3>
+                    <p className="stat-label">Days in a row</p>
+                  </div>
                 </div>
 
                 <div className="stat-card mood-stat">
-                  <h3>Average Mood</h3>
-                  <p className="stat-number mood-indicator">
-                    {dashboardData.moodAverage}
-                  </p>
-                  <p>This week</p>
+                  <div className="stat-icon">
+                    <HiOutlineHeart />
+                  </div>
+                  <div className="stat-info">
+                    <p className="stat-number mood-indicator">
+                      {dashboardData.moodAverage}
+                    </p>
+                    <h3>Average Mood</h3>
+                    <p className="stat-label">This week</p>
+                  </div>
                 </div>
               </div>
             </section>
 
             <section className="quick-actions">
-              <h2>Quick Actions</h2>
+              <div className="section-header">
+                <h2>Quick Actions</h2>
+              </div>
               <div className="action-buttons">
                 <Link to="/journal" className="action-button journal-action">
-                  Write in Journal
+                  <HiOutlineBookOpen className="action-icon" />
+                  <span>Write in Journal</span>
+                  <HiArrowRight className="arrow-icon" />
                 </Link>
                 <Link to="/habits" className="action-button habit-action">
-                  Track Today's Habits
+                  <HiOutlineClipboardCheck className="action-icon" />
+                  <span>Track Today's Habits</span>
+                  <HiArrowRight className="arrow-icon" />
                 </Link>
                 <Link to="/mood" className="action-button mood-action">
-                  Log Your Mood
+                  <HiOutlineHeart className="action-icon" />
+                  <span>Log Your Mood</span>
+                  <HiArrowRight className="arrow-icon" />
                 </Link>
               </div>
             </section>
