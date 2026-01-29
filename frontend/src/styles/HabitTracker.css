@@ -1,12 +1,15 @@
 /* =============================================
-   Habit Tracker Page Styles
+   Habit Tracker Page - Fresh Modern Design
    ============================================= */
 
 .habit-tracker-container {
   max-width: 1000px;
 }
 
-/* Page Header */
+/* =============================================
+   Page Header
+   ============================================= */
+
 .page-header {
   margin-bottom: var(--space-8);
 }
@@ -16,6 +19,7 @@
   font-size: var(--text-3xl);
   font-weight: var(--font-bold);
   color: var(--text-primary);
+  letter-spacing: -0.02em;
 }
 
 .page-subtitle {
@@ -24,33 +28,40 @@
   color: var(--text-secondary);
 }
 
-/* Add Habit Form */
+/* =============================================
+   Add Habit Form
+   ============================================= */
+
 .add-habit-form {
   display: flex;
-  gap: var(--space-3);
+  gap: var(--space-4);
   margin-bottom: var(--space-8);
-  padding: var(--space-5);
-  background: var(--bg-primary);
-  border-radius: var(--radius-xl);
-  border: 1px solid var(--border-light);
+  padding: var(--space-6);
+  background: var(--bg-surface);
+  border-radius: var(--radius-2xl);
+  border: 1px solid var(--border-default);
   box-shadow: var(--shadow-sm);
 }
 
 .habit-input {
   flex: 1;
-  padding: var(--space-3) var(--space-4);
+  padding: var(--space-4);
   font-size: var(--text-base);
-  border: 1px solid var(--border-medium);
-  border-radius: var(--radius-lg);
-  background: var(--bg-primary);
+  border: 1.5px solid var(--border-default);
+  border-radius: var(--radius-xl);
+  background: var(--bg-surface);
   color: var(--text-primary);
-  transition: border-color var(--transition-fast);
+  transition: all var(--transition-fast);
+}
+
+.habit-input:hover {
+  border-color: var(--border-strong);
 }
 
 .habit-input:focus {
   outline: none;
-  border-color: var(--primary-500);
-  box-shadow: 0 0 0 3px var(--primary-100);
+  border-color: var(--habit-color);
+  box-shadow: 0 0 0 4px rgba(34, 197, 94, 0.1);
 }
 
 .habit-input::placeholder {
@@ -61,27 +72,36 @@
   display: flex;
   align-items: center;
   gap: var(--space-2);
-  padding: var(--space-3) var(--space-5);
+  padding: var(--space-4) var(--space-6);
   background: linear-gradient(135deg, var(--habit-color), #059669);
   color: white;
   border: none;
-  border-radius: var(--radius-lg);
-  font-weight: var(--font-medium);
+  border-radius: var(--radius-xl);
+  font-weight: var(--font-semibold);
+  font-size: var(--text-sm);
   cursor: pointer;
   transition: all var(--transition-fast);
   white-space: nowrap;
 }
 
 .add-habit-btn:hover {
-  transform: translateY(-1px);
-  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px -8px rgba(34, 197, 94, 0.5);
 }
 
-/* Loading & Empty States */
+.add-habit-btn:active {
+  transform: translateY(0);
+}
+
+/* =============================================
+   Loading & Empty States
+   ============================================= */
+
 .loading-state {
-  padding: var(--space-10);
+  padding: var(--space-12);
   text-align: center;
   color: var(--text-secondary);
+  font-size: var(--text-base);
 }
 
 .empty-state {
@@ -91,44 +111,46 @@
   justify-content: center;
   padding: var(--space-16);
   text-align: center;
-  background: var(--bg-primary);
-  border-radius: var(--radius-xl);
-  border: 1px solid var(--border-light);
+  background: var(--bg-surface);
+  border-radius: var(--radius-2xl);
+  border: 1px solid var(--border-default);
 }
 
 .empty-state .empty-icon {
   font-size: 4rem;
   color: var(--neutral-300);
-  margin-bottom: var(--space-4);
+  margin-bottom: var(--space-5);
 }
 
 .empty-state p {
-  font-weight: var(--font-medium);
+  font-weight: var(--font-semibold);
   color: var(--text-secondary);
-  margin: 0;
+  margin: 0 0 var(--space-2) 0;
 }
 
 .empty-state span {
   font-size: var(--text-sm);
   color: var(--text-tertiary);
-  margin-top: var(--space-1);
 }
 
-/* Habits Grid */
+/* =============================================
+   Habits Grid
+   ============================================= */
+
 .habits-grid {
-  background: var(--bg-primary);
-  border-radius: var(--radius-xl);
-  border: 1px solid var(--border-light);
+  background: var(--bg-surface);
+  border-radius: var(--radius-2xl);
+  border: 1px solid var(--border-default);
   overflow: hidden;
   box-shadow: var(--shadow-sm);
 }
 
 .habit-row {
   display: grid;
-  grid-template-columns: 1fr repeat(7, 50px) 60px;
+  grid-template-columns: 1fr repeat(7, 52px) 60px;
   align-items: center;
-  padding: var(--space-4);
-  border-bottom: 1px solid var(--border-light);
+  padding: var(--space-4) var(--space-5);
+  border-bottom: 1px solid var(--border-default);
   transition: background var(--transition-fast);
 }
 
@@ -137,16 +159,17 @@
 }
 
 .habit-row:hover:not(.header-row) {
-  background: var(--bg-secondary);
+  background: var(--bg-surface-secondary);
 }
 
 .header-row {
-  background: var(--bg-secondary);
+  background: var(--bg-surface-secondary);
   font-weight: var(--font-semibold);
   font-size: var(--text-xs);
   color: var(--text-secondary);
   text-transform: uppercase;
   letter-spacing: 0.05em;
+  padding: var(--space-3) var(--space-5);
 }
 
 .habit-name {
@@ -156,6 +179,7 @@
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  font-size: var(--text-sm);
 }
 
 .header-row .habit-name {
@@ -163,13 +187,14 @@
   color: var(--text-secondary);
 }
 
-/* Habit Day Cells */
+/* Habit Day Cells - Header */
 .habit-day {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   text-align: center;
+  gap: 2px;
 }
 
 .day-name {
@@ -180,28 +205,37 @@
 
 .day-date {
   font-size: var(--text-sm);
-  font-weight: var(--font-semibold);
+  font-weight: var(--font-bold);
   color: var(--text-primary);
 }
 
+/* Habit Day Cells - Clickable */
 .habit-day.clickable {
-  width: 36px;
-  height: 36px;
-  border-radius: var(--radius-lg);
-  border: 2px solid var(--border-medium);
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-xl);
+  border: 2px solid var(--border-default);
   cursor: pointer;
   transition: all var(--transition-fast);
   flex-direction: row;
+  background: var(--bg-surface);
 }
 
 .habit-day.clickable:hover {
   border-color: var(--habit-color);
-  background: var(--habit-light);
+  background: rgba(34, 197, 94, 0.08);
+  transform: scale(1.05);
 }
 
 .habit-day.completed {
-  background: var(--habit-color);
-  border-color: var(--habit-color);
+  background: linear-gradient(135deg, var(--habit-color), #059669);
+  border-color: transparent;
+  box-shadow: 0 4px 12px -4px rgba(34, 197, 94, 0.4);
+}
+
+.habit-day.completed:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 16px -4px rgba(34, 197, 94, 0.5);
 }
 
 .habit-day.completed .check-icon {
@@ -219,46 +253,67 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 36px;
-  height: 36px;
+  width: 40px;
+  height: 40px;
   padding: 0;
-  background: var(--error-50);
-  color: var(--error-500);
-  border: none;
-  border-radius: var(--radius-lg);
+  background: var(--bg-surface);
+  color: var(--text-tertiary);
+  border: 1.5px solid var(--border-default);
+  border-radius: var(--radius-xl);
   cursor: pointer;
   transition: all var(--transition-fast);
 }
 
 .delete-habit-btn:hover {
-  background: var(--error-100);
+  background: var(--error-50);
+  border-color: var(--error-300);
   color: var(--error-600);
+  transform: scale(1.05);
 }
 
-/* Responsive Styles */
+/* =============================================
+   Responsive Styles
+   ============================================= */
+
 @media (max-width: 768px) {
   .add-habit-form {
     flex-direction: column;
-    padding: var(--space-4);
+    padding: var(--space-5);
+    gap: var(--space-3);
   }
   
   .add-habit-btn {
     width: 100%;
     justify-content: center;
+    padding: var(--space-4);
   }
   
   .habits-grid {
     overflow-x: auto;
+    border-radius: var(--radius-xl);
   }
   
   .habit-row {
-    min-width: 600px;
-    grid-template-columns: 150px repeat(7, 50px) 60px;
+    min-width: 640px;
+    grid-template-columns: 160px repeat(7, 52px) 60px;
+    padding: var(--space-3) var(--space-4);
   }
 }
 
 @media (max-width: 480px) {
+  .page-header {
+    margin-bottom: var(--space-6);
+  }
+  
   .page-header h1 {
     font-size: var(--text-2xl);
+  }
+  
+  .add-habit-form {
+    padding: var(--space-4);
+  }
+  
+  .habit-input {
+    padding: var(--space-3);
   }
 }
