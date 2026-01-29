@@ -4,6 +4,13 @@ import Sidebar from "../components/Sidebar";
 import RichTextEditor from "../components/RichTextEditor";
 import MobileSidebarToggle from "../components/MobileSidebarToggle";
 import { journalAPI } from "../services/api";
+import {
+  HiOutlinePlus,
+  HiOutlineTrash,
+  HiOutlineSave,
+  HiOutlineDocumentText,
+  HiOutlineCalendar,
+} from "react-icons/hi";
 import "../styles/Journal.css";
 
 export default function Journal() {
@@ -114,15 +121,20 @@ export default function Journal() {
             <div className="journal-header">
               <h2>My Journal</h2>
               <button className="new-entry-btn" onClick={handleNewEntry}>
-                New Entry
+                <HiOutlinePlus />
+                <span>New Entry</span>
               </button>
             </div>
 
             <div className="entries-list">
               {loading ? (
-                <p>Loading entries...</p>
+                <div className="entries-loading">Loading entries...</div>
               ) : entries.length === 0 ? (
-                <p>No entries yet. Start writing!</p>
+                <div className="entries-empty">
+                  <HiOutlineDocumentText className="empty-icon" />
+                  <p>No entries yet</p>
+                  <span>Start writing!</span>
+                </div>
               ) : (
                 entries.map((entry) => (
                   <div
@@ -131,7 +143,10 @@ export default function Journal() {
                     onClick={() => handleSelectEntry(entry)}
                   >
                     <h3>{entry.title}</h3>
-                    <p className="entry-date">{formatDate(entry.date)}</p>
+                    <p className="entry-date">
+                      <HiOutlineCalendar />
+                      {formatDate(entry.date)}
+                    </p>
                   </div>
                 ))
               )}
@@ -158,10 +173,12 @@ export default function Journal() {
                   disabled={saving}
                   className="save-btn"
                 >
+                  <HiOutlineSave />
                   {saving ? "Saving..." : "Save"}
                 </button>
                 {currentEntry && (
                   <button onClick={handleDelete} className="delete-btn">
+                    <HiOutlineTrash />
                     Delete
                   </button>
                 )}

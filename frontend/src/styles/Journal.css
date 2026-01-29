@@ -1,155 +1,198 @@
+/* =============================================
+   Journal Page Styles
+   ============================================= */
+
 .journal-container {
   display: flex;
-  height: calc(100vh - 2rem);
-  gap: var(--spacing-lg);
-  max-width: 1400px;
-  margin: 0 auto;
+  gap: var(--space-6);
+  height: calc(100vh - var(--header-height) - var(--space-8));
+  min-height: 600px;
 }
 
+/* Journal Sidebar */
 .journal-sidebar {
-  width: 300px;
-  background: white;
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-md);
+  width: 320px;
+  background: var(--bg-primary);
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--border-light);
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  transition: transform var(--transition-normal) var(--easing-default),
-              box-shadow var(--transition-normal) var(--easing-default);
-}
-
-.journal-sidebar:hover {
-  box-shadow: var(--shadow-lg);
+  flex-shrink: 0;
 }
 
 .journal-header {
-  padding: var(--spacing-md);
-  border-bottom: 1px solid var(--neutral-200);
+  padding: var(--space-5);
+  border-bottom: 1px solid var(--border-light);
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: var(--gradient-primary);
-  color: white;
+  background: var(--bg-secondary);
 }
 
 .journal-header h2 {
   margin: 0;
-  color: white;
-  font-size: var(--text-xl);
+  font-size: var(--text-lg);
+  font-weight: var(--font-semibold);
+  color: var(--text-primary);
 }
 
 .new-entry-btn {
-  background: white;
-  color: var(--primary-600);
-  padding: var(--spacing-xs) var(--spacing-md);
-  border-radius: var(--radius-full);
-  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-4);
+  background: linear-gradient(135deg, var(--primary-500), var(--primary-600));
+  color: white;
+  border: none;
+  border-radius: var(--radius-lg);
   font-size: var(--text-sm);
-  transition: all var(--transition-normal) var(--easing-default);
+  font-weight: var(--font-medium);
+  cursor: pointer;
+  transition: all var(--transition-fast);
 }
 
 .new-entry-btn:hover {
-  background: var(--primary-100);
-  transform: translateY(-2px);
+  transform: translateY(-1px);
   box-shadow: var(--shadow-md);
 }
 
+/* Entries List */
 .entries-list {
   flex: 1;
   overflow-y: auto;
-  padding: var(--spacing-sm);
+  padding: var(--space-3);
+}
+
+.entries-loading {
+  padding: var(--space-6);
+  text-align: center;
+  color: var(--text-tertiary);
+}
+
+.entries-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-10);
+  text-align: center;
+}
+
+.entries-empty .empty-icon {
+  font-size: 3rem;
+  color: var(--neutral-300);
+  margin-bottom: var(--space-4);
+}
+
+.entries-empty p {
+  font-weight: var(--font-medium);
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+.entries-empty span {
+  font-size: var(--text-sm);
+  color: var(--text-tertiary);
 }
 
 .entry-item {
-  padding: var(--spacing-md);
-  border-radius: var(--radius-md);
-  margin-bottom: var(--spacing-sm);
+  padding: var(--space-4);
+  border-radius: var(--radius-lg);
   cursor: pointer;
-  transition: all var(--transition-normal) var(--easing-default);
-  border-left: 3px solid transparent;
+  transition: all var(--transition-fast);
+  margin-bottom: var(--space-2);
+  border: 1px solid transparent;
 }
 
 .entry-item:hover {
-  background: var(--neutral-100);
-  border-left-color: var(--primary-300);
+  background: var(--bg-secondary);
 }
 
 .entry-item.active {
   background: var(--primary-50);
-  border-left-color: var(--primary-500);
+  border-color: var(--primary-200);
 }
 
 .entry-item h3 {
-  margin: 0 0 var(--spacing-xs) 0;
-  font-size: var(--text-base);
-  color: var(--neutral-800);
-  white-space: nowrap;
+  margin: 0 0 var(--space-2) 0;
+  font-size: var(--text-sm);
+  font-weight: var(--font-medium);
+  color: var(--text-primary);
   overflow: hidden;
   text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .entry-date {
-  font-size: var(--text-sm);
-  color: var(--neutral-500);
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
   margin: 0;
+  font-size: var(--text-xs);
+  color: var(--text-tertiary);
 }
 
+/* Journal Editor */
 .journal-editor {
   flex: 1;
+  background: var(--bg-primary);
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--border-light);
   display: flex;
   flex-direction: column;
-  background: white;
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-md);
   overflow: hidden;
-  transition: box-shadow var(--transition-normal) var(--easing-default);
-}
-
-.journal-editor:hover {
-  box-shadow: var(--shadow-lg);
 }
 
 .editor-header {
-  padding: var(--spacing-md);
-  border-bottom: 1px solid var(--neutral-200);
+  padding: var(--space-5);
+  border-bottom: 1px solid var(--border-light);
   display: flex;
   justify-content: space-between;
   align-items: center;
-  flex-wrap: wrap;
-  gap: var(--spacing-sm);
+  gap: var(--space-4);
+  background: var(--bg-secondary);
 }
 
 .entry-title-input {
   flex: 1;
-  min-width: 200px;
-  padding: var(--spacing-sm) var(--spacing-md);
-  font-size: var(--text-xl);
-  font-weight: 600;
-  border: none;
-  background: transparent;
-  color: var(--neutral-800);
+  padding: var(--space-3) var(--space-4);
+  font-size: var(--text-lg);
+  font-weight: var(--font-semibold);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-lg);
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  transition: border-color var(--transition-fast);
 }
 
 .entry-title-input:focus {
   outline: none;
+  border-color: var(--primary-500);
+  box-shadow: 0 0 0 3px var(--primary-100);
 }
 
 .editor-actions {
   display: flex;
-  gap: var(--spacing-sm);
+  gap: var(--space-3);
 }
 
 .save-btn {
-  background: var(--gradient-primary);
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-5);
+  background: linear-gradient(135deg, var(--success-500), var(--success-600));
   color: white;
-  padding: var(--spacing-sm) var(--spacing-lg);
-  border-radius: var(--radius-md);
-  font-weight: 500;
-  transition: all var(--transition-normal) var(--easing-default);
+  border: none;
+  border-radius: var(--radius-lg);
+  font-weight: var(--font-medium);
+  cursor: pointer;
+  transition: all var(--transition-fast);
 }
 
-.save-btn:hover {
-  transform: translateY(-2px);
+.save-btn:hover:not(:disabled) {
+  transform: translateY(-1px);
   box-shadow: var(--shadow-md);
 }
 
@@ -157,141 +200,112 @@
   opacity: 0.6;
   cursor: not-allowed;
   transform: none;
-  box-shadow: none;
 }
 
 .delete-btn {
-  background: var(--neutral-200);
-  color: var(--neutral-700);
-  padding: var(--spacing-sm) var(--spacing-lg);
-  border-radius: var(--radius-md);
-  font-weight: 500;
-  transition: all var(--transition-normal) var(--easing-default);
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-5);
+  background: var(--error-50);
+  color: var(--error-600);
+  border: 1px solid var(--error-200);
+  border-radius: var(--radius-lg);
+  font-weight: var(--font-medium);
+  cursor: pointer;
+  transition: all var(--transition-fast);
 }
 
 .delete-btn:hover {
-  background: var(--error);
-  color: white;
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-md);
+  background: var(--error-100);
+  border-color: var(--error-300);
 }
 
+/* Rich Text Editor Container */
 .rich-text-editor {
   flex: 1;
-  overflow: hidden;
   display: flex;
   flex-direction: column;
+  overflow: hidden;
 }
 
-/* Mobile view shows a toggle for the sidebar */
+/* Mobile Toggle */
 .toggle-journal-sidebar {
   display: none;
   position: fixed;
-  bottom: 20px;
-  right: 20px;
-  z-index: 10;
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  background: var(--primary-600);
-  color: white;
-  box-shadow: var(--shadow-lg);
-  justify-content: center;
-  align-items: center;
-  font-size: 24px;
+  bottom: var(--space-6);
+  left: var(--space-6);
+  z-index: var(--z-sticky);
 }
 
-/* Responsive layout */
-@media (max-width: 1200px) {
-  .journal-container {
-    gap: var(--spacing-md);
-  }
-  
+/* Responsive Styles */
+@media (max-width: 1024px) {
   .journal-sidebar {
-    width: 250px;
-  }
-}
-
-@media (max-width: 992px) {
-  .journal-container {
-    flex-direction: column;
-    height: auto;
-    min-height: calc(100vh - 60px);
-  }
-
-  .journal-sidebar {
-    width: 100%;
-    height: 250px;
-    max-height: 50vh;
-  }
-  
-  .entry-title-input {
-    font-size: var(--text-lg);
-  }
-  
-  .journal-editor {
-    flex: 1 0 500px; /* Ensure editor has enough height */
+    width: 280px;
   }
 }
 
 @media (max-width: 768px) {
   .journal-container {
-    margin-top: 10px;
-    gap: var(--spacing-sm);
-  }
-  
-  .toggle-journal-sidebar {
-    display: flex;
+    flex-direction: column;
+    height: auto;
   }
   
   .journal-sidebar {
     position: fixed;
     left: 0;
     top: 0;
-    height: 100vh;
-    width: 280px;
+    bottom: 0;
+    width: 300px;
+    z-index: var(--z-modal);
     transform: translateX(-100%);
-    z-index: 20;
-    transition: transform 0.3s ease;
+    transition: transform var(--transition-slow);
+    border-radius: 0;
+    box-shadow: var(--shadow-xl);
   }
   
-  .journal-sidebar.mobile-open {
+  .journal-sidebar.mobile-visible {
     transform: translateX(0);
+  }
+  
+  .toggle-journal-sidebar {
+    display: flex;
+  }
+  
+  .journal-editor {
+    min-height: 500px;
   }
   
   .editor-header {
     flex-direction: column;
-    align-items: flex-start;
-  }
-  
-  .entry-title-input {
-    width: 100%;
-    min-width: 0;
+    align-items: stretch;
+    gap: var(--space-3);
   }
   
   .editor-actions {
-    width: 100%;
-    justify-content: space-between;
-  }
-  
-  .save-btn, .delete-btn {
-    flex: 1;
-    text-align: center;
-    padding: var(--spacing-sm);
-    font-size: var(--text-sm);
+    justify-content: flex-end;
   }
 }
 
 @media (max-width: 480px) {
-  .journal-container {
-    padding: 0 var(--spacing-xs);
+  .journal-header {
+    padding: var(--space-4);
   }
   
   .editor-header {
-    padding: var(--spacing-sm);
+    padding: var(--space-4);
   }
   
-  .journal-editor {
-    border-radius: var(--radius-md);
+  .entry-title-input {
+    font-size: var(--text-base);
+  }
+  
+  .editor-actions {
+    width: 100%;
+  }
+  
+  .save-btn, .delete-btn {
+    flex: 1;
+    justify-content: center;
   }
 }
