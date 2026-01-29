@@ -1,82 +1,132 @@
+/* =============================================
+   Drive Auth Popup - Modern Design
+   ============================================= */
+
 .drive-auth-overlay {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 10000;
+  z-index: var(--z-modal);
+  padding: var(--space-4);
+  animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 .drive-auth-modal {
-  background-color: white;
-  padding: var(--spacing-lg);
-  border-radius: var(--radius-lg);
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  background: var(--bg-surface);
+  padding: var(--space-8);
+  border-radius: var(--radius-2xl);
+  box-shadow: var(--shadow-2xl);
   max-width: 450px;
-  width: 90%;
+  width: 100%;
+  animation: scaleIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes scaleIn {
+  from { 
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to { 
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
 .drive-auth-modal h2 {
-  color: var(--primary-600);
-  margin-bottom: var(--spacing-md);
+  color: var(--text-primary);
+  margin: 0 0 var(--space-4) 0;
+  font-size: var(--text-xl);
+  font-weight: var(--font-bold);
 }
 
 .drive-auth-modal p {
-  color: var(--neutral-700);
-  margin-bottom: var(--spacing-lg);
-  line-height: 1.6;
+  color: var(--text-secondary);
+  margin: 0 0 var(--space-6) 0;
+  line-height: var(--leading-relaxed);
+  font-size: var(--text-sm);
 }
 
 .drive-auth-buttons {
   display: flex;
-  gap: var(--spacing-md);
+  gap: var(--space-3);
   flex-wrap: wrap;
 }
 
 .drive-auth-button {
   flex: 1;
-  background-color: var(--primary-500);
+  background: linear-gradient(135deg, var(--primary-500), var(--primary-600));
   color: white;
-  padding: var(--spacing-md);
-  border-radius: var(--radius-md);
-  font-weight: 500;
-  min-width: 180px;
+  padding: var(--space-4);
+  border: none;
+  border-radius: var(--radius-xl);
+  font-weight: var(--font-semibold);
+  font-size: var(--text-sm);
+  min-width: 160px;
+  cursor: pointer;
+  transition: all var(--transition-fast);
 }
 
-.drive-auth-button:hover {
-  background-color: var(--primary-600);
+.drive-auth-button:hover:not(:disabled) {
+  background: linear-gradient(135deg, var(--primary-600), var(--primary-700));
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-primary);
 }
 
 .drive-auth-button:disabled {
-  background-color: var(--neutral-300);
+  opacity: 0.6;
   cursor: not-allowed;
+  transform: none;
 }
 
 .drive-cancel-button {
   flex: 1;
-  background-color: var(--neutral-100);
-  color: var(--neutral-700);
-  padding: var(--spacing-md);
-  border-radius: var(--radius-md);
-  font-weight: 500;
-  min-width: 120px;
+  background: var(--bg-surface);
+  color: var(--text-secondary);
+  padding: var(--space-4);
+  border: 1.5px solid var(--border-default);
+  border-radius: var(--radius-xl);
+  font-weight: var(--font-semibold);
+  font-size: var(--text-sm);
+  min-width: 100px;
+  cursor: pointer;
+  transition: all var(--transition-fast);
 }
 
-.drive-cancel-button:hover {
-  background-color: var(--neutral-200);
+.drive-cancel-button:hover:not(:disabled) {
+  background: var(--bg-surface-secondary);
+  border-color: var(--border-strong);
+  color: var(--text-primary);
 }
 
 .drive-cancel-button:disabled {
-  color: var(--neutral-400);
+  opacity: 0.6;
   cursor: not-allowed;
 }
 
-@media (max-width: 468px) {
+/* Responsive */
+@media (max-width: 480px) {
+  .drive-auth-modal {
+    padding: var(--space-6);
+  }
+  
   .drive-auth-buttons {
     flex-direction: column;
+  }
+  
+  .drive-auth-button,
+  .drive-cancel-button {
+    min-width: 0;
   }
 }

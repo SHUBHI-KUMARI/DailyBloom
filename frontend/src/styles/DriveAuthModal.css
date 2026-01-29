@@ -1,80 +1,124 @@
+/* =============================================
+   Drive Auth Modal - Modern Design
+   ============================================= */
+
 .drive-auth-overlay {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.6);
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 1000;
+  z-index: var(--z-modal);
+  padding: var(--space-4);
+  animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 .drive-auth-modal {
-  background: white;
-  border-radius: var(--radius-lg);
-  padding: var(--spacing-xl);
-  max-width: 500px;
-  width: 90%;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  background: var(--bg-surface);
+  border-radius: var(--radius-2xl);
+  padding: var(--space-8);
+  max-width: 480px;
+  width: 100%;
+  box-shadow: var(--shadow-2xl);
+  animation: scaleIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes scaleIn {
+  from { 
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to { 
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
 .drive-auth-modal h2 {
-  margin-top: 0;
-  color: var(--primary-600);
-  margin-bottom: var(--spacing-md);
+  margin: 0 0 var(--space-4) 0;
+  color: var(--text-primary);
+  font-size: var(--text-xl);
+  font-weight: var(--font-bold);
 }
 
 .drive-auth-modal p {
-  margin-bottom: var(--spacing-md);
-  color: var(--neutral-700);
+  margin: 0 0 var(--space-4) 0;
+  color: var(--text-secondary);
+  font-size: var(--text-sm);
+  line-height: var(--leading-relaxed);
 }
 
 .drive-auth-buttons {
   display: flex;
-  gap: var(--spacing-md);
-  margin-top: var(--spacing-lg);
+  gap: var(--space-3);
+  margin-top: var(--space-6);
 }
 
 .authorize-button {
-  background: var(--primary-500);
-  color: white;
-  padding: var(--spacing-md) var(--spacing-lg);
-  border-radius: var(--radius-md);
-  font-weight: 500;
   flex: 1;
+  background: linear-gradient(135deg, var(--primary-500), var(--primary-600));
+  color: white;
+  padding: var(--space-4);
+  border: none;
+  border-radius: var(--radius-xl);
+  font-weight: var(--font-semibold);
+  font-size: var(--text-sm);
+  cursor: pointer;
+  transition: all var(--transition-fast);
 }
 
-.authorize-button:hover {
-  background: var(--primary-600);
+.authorize-button:hover:not(:disabled) {
+  background: linear-gradient(135deg, var(--primary-600), var(--primary-700));
   transform: translateY(-2px);
+  box-shadow: var(--shadow-primary);
 }
 
 .authorize-button:disabled {
-  background: var(--neutral-300);
+  opacity: 0.6;
   transform: none;
   cursor: not-allowed;
 }
 
 .cancel-button {
-  background: var(--neutral-100);
-  color: var(--neutral-700);
-  padding: var(--spacing-md) var(--spacing-lg);
-  border-radius: var(--radius-md);
-  font-weight: 500;
+  flex: 1;
+  background: var(--bg-surface);
+  color: var(--text-secondary);
+  padding: var(--space-4);
+  border: 1.5px solid var(--border-default);
+  border-radius: var(--radius-xl);
+  font-weight: var(--font-semibold);
+  font-size: var(--text-sm);
+  cursor: pointer;
+  transition: all var(--transition-fast);
 }
 
-.cancel-button:hover {
-  background: var(--neutral-200);
+.cancel-button:hover:not(:disabled) {
+  background: var(--bg-surface-secondary);
+  border-color: var(--border-strong);
+  color: var(--text-primary);
 }
 
 .cancel-button:disabled {
-  color: var(--neutral-400);
+  opacity: 0.6;
   cursor: not-allowed;
 }
 
+/* Responsive */
 @media (max-width: 480px) {
+  .drive-auth-modal {
+    padding: var(--space-6);
+  }
+  
   .drive-auth-buttons {
     flex-direction: column;
   }
