@@ -2,19 +2,47 @@ import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import {
-  HiHome,
-  HiBookOpen,
-  HiClipboardCheck,
-  HiHeart,
-  HiCalendar,
-  HiMenuAlt2,
-  HiX,
-  HiLogout,
-  HiChevronLeft,
-  HiChevronRight,
+  HiOutlineHome,
+  HiOutlineBookOpen,
+  HiOutlineClipboardCheck,
+  HiOutlineHeart,
+  HiOutlineCalendar,
+  HiOutlineLogout,
+  HiOutlineMenuAlt2,
+  HiOutlineX,
+  HiOutlineChevronLeft,
+  HiOutlineChevronRight,
 } from "react-icons/hi";
 import { RiLeafLine } from "react-icons/ri";
 import "../styles/Sidebar.css";
+
+const navItems = [
+  {
+    path: "/dashboard",
+    label: "Dashboard",
+    icon: HiOutlineHome,
+  },
+  {
+    path: "/journal",
+    label: "Journal",
+    icon: HiOutlineBookOpen,
+  },
+  {
+    path: "/habits",
+    label: "Habits",
+    icon: HiOutlineClipboardCheck,
+  },
+  {
+    path: "/mood",
+    label: "Mood",
+    icon: HiOutlineHeart,
+  },
+  {
+    path: "/calendar",
+    label: "Calendar",
+    icon: HiOutlineCalendar,
+  },
+];
 
 export default function Sidebar() {
   const { currentUser, logout } = useAuth();
@@ -25,11 +53,19 @@ export default function Sidebar() {
 
   useEffect(() => {
     const handleResize = () => {
-      setWindowWidth(window.innerWidth);
-      if (window.innerWidth < 1024 && window.innerWidth >= 768) {
+      const width = window.innerWidth;
+      setWindowWidth(width);
+      
+      // Auto-collapse on tablet
+      if (width < 1024 && width >= 768) {
         setCollapsed(true);
-      } else if (window.innerWidth >= 1024) {
+      } else if (width >= 1024) {
         setCollapsed(false);
+      }
+      
+      // Close mobile sidebar on resize to desktop
+      if (width >= 768) {
+        setMobileOpen(false);
       }
     };
 
@@ -39,7 +75,8 @@ export default function Sidebar() {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  const closeMobileSidebar = () => {
+  // Close mobile sidebar when clicking on a link
+  const handleNavClick = () => {
     if (windowWidth < 768) {
       setMobileOpen(false);
     }
@@ -67,30 +104,52 @@ export default function Sidebar() {
         .split(" ")
         .map((n) => n[0])
         .join("")
-        .toUpperCase();
+        .toUpperCase()
+        .slice(0, 2);
     }
     return currentUser?.email?.substring(0, 2).toUpperCase() || "U";
   };
 
-  const sidebarClass = `sidebar ${collapsed ? "collapsed" : ""} ${mobileOpen ? "mobile-open" : ""}`;
+  const getUserDisplayName = () => {
+    if (currentUser?.name) {
+      return currentUser.name;
+    }
+    if (currentUser?.email) {
+      return currentUser.email.split("@")[0];
+    }
+    return "User";
+  };
+
+  const sidebarClass = `sidebar${collapsed ? " collapsed" : ""}${mobileOpen ? " mobile-open" : ""}`;
 
   return (
     <>
-      <button className="mobile-menu-button" onClick={toggleMobileSidebar}>
-        {mobileOpen ? <HiX /> : <HiMenuAlt2 />}
+      {/* Mobile Menu Toggle */}
+      <button
+        className="mobile-menu-button"
+        onClick={toggleMobileSidebar}
+        aria-label={mobileOpen ? "Close menu" : "Open menu"}
+      >
+        {mobileOpen ? <HiOutlineX /> : <HiOutlineMenuAlt2 />}
       </button>
 
       <aside className={sidebarClass}>
+        {/* Header */}
         <div className="sidebar-header">
-          <div className="logo-container">
+          <Link to="/dashboard" className="logo-container">
             <RiLeafLine className="logo-icon" />
             <span className="logo-text">DailyBloom</span>
-          </div>
-          <button className="collapse-btn" onClick={toggleSidebar}>
-            {collapsed ? <HiChevronRight /> : <HiChevronLeft />}
+          </Link>
+          <button
+            className="collapse-btn"
+            onClick={toggleSidebar}
+            aria-label={collapsed ? "Expand sidebar" : "Collapse sidebar"}
+          >
+            {collapsed ? <HiOutlineChevronRight /> : <HiOutlineChevronLeft />}
           </button>
         </div>
 
+        {/* User Profile */}
         <div className="user-profile">
           {currentUser?.avatar ? (
             <img
@@ -104,69 +163,42 @@ export default function Sidebar() {
             </div>
           )}
           <div className="user-info">
-            <p className="user-name">
-              {currentUser?.name || currentUser?.email || "User"}
-            </p>
+            <p className="user-name">{getUserDisplayName()}</p>
           </div>
         </div>
 
+        {/* Navigation */}
         <nav className="sidebar-nav">
-          <Link
-            to="/dashboard"
-            className={`nav-link ${location.pathname === "/dashboard" ? "active" : ""}`}
-            onClick={closeMobileSidebar}
-          >
-            <span className="nav-icon">
-              <HiHome />
-            </span>
-            <span className="nav-text">Dashboard</span>
-          </Link>
-          <Link
-            to="/journal"
-            className={`nav-link ${location.pathname === "/journal" ? "active" : ""}`}
-            onClick={closeMobileSidebar}
-          >
-            <span className="nav-icon">
-              <HiBookOpen />
-            </span>
-            <span className="nav-text">Journal</span>
-          </Link>
-          <Link
-            to="/habits"
-            className={`nav-link ${location.pathname === "/habits" ? "active" : ""}`}
-            onClick={closeMobileSidebar}
-          >
-            <span className="nav-icon">
-              <HiClipboardCheck />
-            </span>
-            <span className="nav-text">Habits</span>
-          </Link>
-          <Link
-            to="/mood"
-            className={`nav-link ${location.pathname === "/mood" ? "active" : ""}`}
-            onClick={closeMobileSidebar}
-          >
-            <span className="nav-icon">
-              <HiHeart />
-            </span>
-            <span className="nav-text">Mood</span>
-          </Link>
-          <Link
-            to="/calendar"
-            className={`nav-link ${location.pathname === "/calendar" ? "active" : ""}`}
-            onClick={closeMobileSidebar}
-          >
-            <span className="nav-icon">
-              <HiCalendar />
-            </span>
-            <span className="nav-text">Calendar</span>
-          </Link>
+          {navItems.map((item) => {
+            const Icon = item.icon;
+            const isActive = location.pathname === item.path;
+            
+            return (
+              <Link
+                key={item.path}
+                to={item.path}
+                className={`nav-link${isActive ? " active" : ""}`}
+                onClick={handleNavClick}
+                data-tooltip={item.label}
+              >
+                <span className="nav-icon">
+                  <Icon />
+                </span>
+                <span className="nav-text">{item.label}</span>
+              </Link>
+            );
+          })}
         </nav>
 
+        {/* Footer */}
         <div className="sidebar-footer">
-          <button className="logout-btn" onClick={handleLogout}>
+          <button
+            className="logout-btn"
+            onClick={handleLogout}
+            data-tooltip="Logout"
+          >
             <span className="logout-icon">
-              <HiLogout />
+              <HiOutlineLogout />
             </span>
             <span className="logout-text">Logout</span>
           </button>
