@@ -233,9 +233,8 @@
   --sidebar-collapsed: 80px;
   --header-height: 64px;
   --container-max: 1280px;
-}
 
-/* ==========================================
+  /* ==========================================
      BACKWARD COMPATIBILITY ALIASES
      (For older components that use legacy names)
      ========================================== */
