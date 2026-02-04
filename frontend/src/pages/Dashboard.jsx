@@ -9,7 +9,15 @@ import {
   HiOutlineHeart,
   HiArrowRight,
   HiOutlineRefresh,
+  HiFire,
 } from "react-icons/hi";
+import {
+  BsEmojiLaughing,
+  BsEmojiSmile,
+  BsEmojiNeutral,
+  BsEmojiFrown,
+  BsEmojiTear,
+} from "react-icons/bs";
 import "../styles/Dashboard.css";
 
 export default function Dashboard() {
@@ -135,52 +143,100 @@ export default function Dashboard() {
                 <h2>Overview</h2>
               </div>
               <div className="stats-grid">
-                <div className="stat-card journal-stat">
-                  <div className="stat-icon">
-                    <HiOutlineBookOpen />
+                {/* Journal Card */}
+                <div className="stat-card journal-card-redesign">
+                  <div className="card-header">
+                    <HiOutlineBookOpen className="card-icon" />
+                    <span className="card-title">Journal Entries</span>
+                    <span className="card-period">Total</span>
                   </div>
-                  <div className="stat-info">
-                    <p className="stat-number">{dashboardData.journalCount}</p>
-                    <h3>Journal Entries</h3>
-                    <p className="stat-label">Total entries</p>
-                  </div>
-                </div>
-
-                <div className="stat-card habit-stat">
-                  <div className="stat-icon">
-                    <HiOutlineClipboardCheck />
-                  </div>
-                  <div className="stat-info">
-                    <p className="stat-number">
-                      {dashboardData.completedHabits}/
-                      {dashboardData.totalHabits}
-                    </p>
-                    <h3>Habits</h3>
-                    <p className="stat-label">Completed today</p>
+                  <div className="card-content">
+                    <div className="card-visual journal-visual">
+                      <span className="visual-number">
+                        {dashboardData.journalCount}
+                      </span>
+                    </div>
+                    <div className="card-text">
+                      <span className="card-value">
+                        {dashboardData.journalCount === 1 ? "Entry" : "Entries"}
+                      </span>
+                      <span className="card-sublabel">written so far</span>
+                    </div>
                   </div>
                 </div>
 
-                <div className="stat-card streak-stat">
-                  <div className="stat-icon">
-                    <HiOutlineLightningBolt />
+                {/* Habits Card */}
+                <div className="stat-card habit-card-redesign">
+                  <div className="card-header">
+                    <HiOutlineClipboardCheck className="card-icon" />
+                    <span className="card-title">Daily Habits</span>
+                    <span className="card-period">Today</span>
                   </div>
-                  <div className="stat-info">
-                    <p className="stat-number">{dashboardData.streakCount}</p>
-                    <h3>Current Streak</h3>
-                    <p className="stat-label">Days in a row</p>
+                  <div className="card-content">
+                    <div className="card-visual habit-visual">
+                      <div className="habit-progress-ring">
+                        <span className="progress-text">
+                          {dashboardData.totalHabits > 0
+                            ? Math.round(
+                                (dashboardData.completedHabits /
+                                  dashboardData.totalHabits) *
+                                  100,
+                              )
+                            : 0}
+                          %
+                        </span>
+                      </div>
+                    </div>
+                    <div className="card-text">
+                      <span className="card-value">
+                        {dashboardData.completedHabits}/
+                        {dashboardData.totalHabits}
+                      </span>
+                      <span className="card-sublabel">completed today</span>
+                    </div>
                   </div>
                 </div>
 
-                <div className="stat-card mood-stat">
-                  <div className="stat-icon">
-                    <HiOutlineHeart />
+                {/* Streak Card */}
+                <div className="stat-card streak-card-redesign">
+                  <div className="card-header">
+                    <HiOutlineLightningBolt className="card-icon" />
+                    <span className="card-title">Current Streak</span>
+                    <span className="card-period">Active</span>
                   </div>
-                  <div className="stat-info">
-                    <p className="stat-number mood-indicator">
-                      {dashboardData.moodAverage}
-                    </p>
-                    <h3>Average Mood</h3>
-                    <p className="stat-label">This week</p>
+                  <div className="card-content">
+                    <div className="card-visual streak-visual">
+                      <HiFire className="streak-fire-icon" />
+                    </div>
+                    <div className="card-text">
+                      <span className="card-value">
+                        {dashboardData.streakCount}{" "}
+                        {dashboardData.streakCount === 1 ? "Day" : "Days"}
+                      </span>
+                      <span className="card-sublabel">in a row</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Mood Card */}
+                <div className="stat-card mood-card-redesign">
+                  <div className="card-header">
+                    <HiOutlineHeart className="card-icon" />
+                    <span className="card-title">Average Mood</span>
+                    <span className="card-period">This week</span>
+                  </div>
+                  <div className="card-content">
+                    <div
+                      className={`card-visual mood-visual mood-${dashboardData.moodAverage.toLowerCase()}`}
+                    >
+                      {getMoodIcon(dashboardData.moodAverage)}
+                    </div>
+                    <div className="card-text">
+                      <span className="card-value">
+                        {dashboardData.moodAverage}
+                      </span>
+                      <span className="card-sublabel">overall feeling</span>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -212,5 +268,19 @@ export default function Dashboard() {
         )}
       </main>
     </div>
+  );
+}
+
+// Helper function to get mood icon
+function getMoodIcon(mood) {
+  const moodIcons = {
+    great: <BsEmojiLaughing className="mood-icon" />,
+    good: <BsEmojiSmile className="mood-icon" />,
+    neutral: <BsEmojiNeutral className="mood-icon" />,
+    bad: <BsEmojiFrown className="mood-icon" />,
+    awful: <BsEmojiTear className="mood-icon" />,
+  };
+  return (
+    moodIcons[mood?.toLowerCase()] || <BsEmojiNeutral className="mood-icon" />
   );
 }

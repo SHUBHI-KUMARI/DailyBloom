@@ -172,13 +172,13 @@
 .stat-card {
   background: var(--bg-surface);
   border-radius: var(--radius-2xl);
-  padding: var(--space-6);
+  padding: var(--space-5);
   box-shadow: var(--shadow-sm);
   border: 1px solid var(--border-default);
   transition: all var(--transition-normal);
   display: flex;
   flex-direction: column;
-  gap: var(--space-4);
+  gap: var(--space-3);
   position: relative;
   overflow: hidden;
 }
@@ -204,79 +204,268 @@
   opacity: 1;
 }
 
-.journal-stat::before {
-  background: linear-gradient(90deg, var(--journal-color), #a78bfa);
+/* =============================================
+   Redesigned Card - Common Styles
+   ============================================= */
+
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
 }
 
-.habit-stat::before {
-  background: linear-gradient(90deg, var(--habit-color), #34d399);
+.card-icon {
+  font-size: 1.25rem;
 }
 
-.streak-stat::before {
-  background: linear-gradient(90deg, var(--accent-500), var(--accent-400));
+.card-title {
+  font-size: var(--text-sm);
+  font-weight: var(--font-semibold);
+  color: var(--text-secondary);
+  flex: 1;
 }
 
-.mood-stat::before {
-  background: linear-gradient(90deg, var(--mood-color), #fbbf24);
+.card-period {
+  font-size: var(--text-xs);
+  color: var(--text-tertiary);
+  padding: var(--space-1) var(--space-2);
+  border-radius: var(--radius-full);
 }
 
-.stat-icon {
-  width: 56px;
-  height: 56px;
-  border-radius: var(--radius-xl);
+.card-content {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-2) 0;
+}
+
+.card-visual {
+  width: 64px;
+  height: 64px;
+  border-radius: var(--radius-full);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.5rem;
+  font-size: 1.75rem;
+  flex-shrink: 0;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
-.journal-stat .stat-icon {
-  background: linear-gradient(135deg, var(--journal-light), rgba(139, 92, 246, 0.15));
-  color: var(--journal-color);
-}
-
-.habit-stat .stat-icon {
-  background: linear-gradient(135deg, var(--habit-light), rgba(34, 197, 94, 0.15));
-  color: var(--habit-color);
-}
-
-.streak-stat .stat-icon {
-  background: linear-gradient(135deg, var(--accent-100), rgba(245, 158, 11, 0.15));
-  color: var(--accent-600);
-}
-
-.mood-stat .stat-icon {
-  background: linear-gradient(135deg, var(--mood-light), rgba(245, 158, 11, 0.15));
-  color: var(--mood-color);
-}
-
-.stat-info {
-  flex: 1;
+.card-text {
   display: flex;
   flex-direction: column;
-  gap: var(--space-1);
+  gap: 2px;
 }
 
-.stat-number {
-  font-size: var(--text-3xl);
+.card-value {
+  font-size: var(--text-xl);
   font-weight: var(--font-bold);
   color: var(--text-primary);
-  margin: 0;
-  line-height: 1.1;
-  letter-spacing: -0.02em;
+  line-height: 1.2;
 }
 
-.stat-info h3 {
-  font-size: var(--text-base);
-  font-weight: var(--font-semibold);
-  color: var(--text-primary);
-  margin: 0;
-}
-
-.stat-label {
-  font-size: var(--text-sm);
+.card-sublabel {
+  font-size: var(--text-xs);
   color: var(--text-tertiary);
-  margin: 0;
+}
+
+/* =============================================
+   Journal Card Redesign
+   ============================================= */
+
+.journal-card-redesign {
+  background: linear-gradient(135deg, rgba(236, 72, 153, 0.08) 0%, rgba(139, 92, 246, 0.08) 100%);
+  border: 1px solid rgba(236, 72, 153, 0.2);
+}
+
+.journal-card-redesign:hover {
+  border-color: rgba(236, 72, 153, 0.3);
+}
+
+.journal-card-redesign::before {
+  background: linear-gradient(90deg, #ec4899, #a78bfa);
+}
+
+.journal-card-redesign .card-icon {
+  color: #ec4899;
+}
+
+.journal-card-redesign .card-period {
+  background: rgba(236, 72, 153, 0.1);
+  color: #be185d;
+}
+
+.journal-visual {
+  background: linear-gradient(135deg, #fce7f3, #f5d0fe);
+  color: #be185d;
+  font-weight: var(--font-bold);
+}
+
+.visual-number {
+  font-size: 1.5rem;
+  font-weight: var(--font-bold);
+}
+
+/* =============================================
+   Habit Card Redesign
+   ============================================= */
+
+.habit-card-redesign {
+  background: linear-gradient(135deg, rgba(34, 197, 94, 0.08) 0%, rgba(16, 185, 129, 0.08) 100%);
+  border: 1px solid rgba(34, 197, 94, 0.2);
+}
+
+.habit-card-redesign:hover {
+  border-color: rgba(34, 197, 94, 0.3);
+}
+
+.habit-card-redesign::before {
+  background: linear-gradient(90deg, #22c55e, #10b981);
+}
+
+.habit-card-redesign .card-icon {
+  color: #22c55e;
+}
+
+.habit-card-redesign .card-period {
+  background: rgba(34, 197, 94, 0.1);
+  color: #15803d;
+}
+
+.habit-visual {
+  background: linear-gradient(135deg, #dcfce7, #bbf7d0);
+}
+
+.habit-progress-ring {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-full);
+  border: 4px solid rgba(34, 197, 94, 0.2);
+  background: white;
+}
+
+.progress-text {
+  font-size: var(--text-base);
+  font-weight: var(--font-bold);
+  color: #15803d;
+}
+
+/* =============================================
+   Streak Card Redesign
+   ============================================= */
+
+.streak-card-redesign {
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.08) 0%, rgba(249, 115, 22, 0.08) 100%);
+  border: 1px solid rgba(245, 158, 11, 0.2);
+}
+
+.streak-card-redesign:hover {
+  border-color: rgba(245, 158, 11, 0.3);
+}
+
+.streak-card-redesign::before {
+  background: linear-gradient(90deg, #f59e0b, #f97316);
+}
+
+.streak-card-redesign .card-icon {
+  color: #f59e0b;
+}
+
+.streak-card-redesign .card-period {
+  background: rgba(245, 158, 11, 0.1);
+  color: #b45309;
+}
+
+.streak-visual {
+  background: linear-gradient(135deg, #fef3c7, #fde68a);
+}
+
+.streak-fire-icon {
+  font-size: 2rem;
+  color: #f97316;
+  filter: drop-shadow(0 2px 4px rgba(249, 115, 22, 0.3));
+}
+
+/* =============================================
+   Mood Card Redesign
+   ============================================= */
+
+.mood-card-redesign {
+  background: linear-gradient(135deg, rgba(168, 85, 247, 0.08) 0%, rgba(139, 92, 246, 0.08) 100%);
+  border: 1px solid rgba(168, 85, 247, 0.2);
+}
+
+.mood-card-redesign:hover {
+  border-color: rgba(168, 85, 247, 0.3);
+}
+
+.mood-card-redesign::before {
+  background: linear-gradient(90deg, #a855f7, #8b5cf6);
+}
+
+.mood-card-redesign .card-icon {
+  color: #a855f7;
+}
+
+.mood-card-redesign .card-period {
+  background: rgba(168, 85, 247, 0.1);
+  color: #7c3aed;
+}
+
+.mood-visual {
+  background: white;
+}
+
+.mood-icon {
+  font-size: 2rem;
+}
+
+.mood-visual.mood-great {
+  background: linear-gradient(135deg, #dcfce7, #bbf7d0);
+  box-shadow: 0 4px 12px rgba(34, 197, 94, 0.2);
+}
+
+.mood-visual.mood-great .mood-icon {
+  color: #22c55e;
+}
+
+.mood-visual.mood-good {
+  background: linear-gradient(135deg, #dbeafe, #bfdbfe);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.2);
+}
+
+.mood-visual.mood-good .mood-icon {
+  color: #3b82f6;
+}
+
+.mood-visual.mood-neutral {
+  background: linear-gradient(135deg, #f3f4f6, #e5e7eb);
+  box-shadow: 0 4px 12px rgba(107, 114, 128, 0.15);
+}
+
+.mood-visual.mood-neutral .mood-icon {
+  color: #6b7280;
+}
+
+.mood-visual.mood-bad {
+  background: linear-gradient(135deg, #fef3c7, #fde68a);
+  box-shadow: 0 4px 12px rgba(245, 158, 11, 0.2);
+}
+
+.mood-visual.mood-bad .mood-icon {
+  color: #f59e0b;
+}
+
+.mood-visual.mood-awful {
+  background: linear-gradient(135deg, #fee2e2, #fecaca);
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.2);
+}
+
+.mood-visual.mood-awful .mood-icon {
+  color: #ef4444;
 }
 
 /* =============================================
