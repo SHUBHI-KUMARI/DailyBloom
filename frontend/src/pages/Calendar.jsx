@@ -11,6 +11,15 @@ import {
 } from "react-icons/hi";
 import "../styles/Calendar.css";
 
+// Helper function to format date as YYYY-MM-DD in local timezone
+const formatDateLocal = (date) => {
+  const d = new Date(date);
+  const year = d.getFullYear();
+  const month = String(d.getMonth() + 1).padStart(2, '0');
+  const day = String(d.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
+};
+
 export default function Calendar() {
   const { currentUser } = useAuth();
   const [calendarData, setCalendarData] = useState({
@@ -67,13 +76,12 @@ export default function Calendar() {
     for (let i = 1; i <= daysInMonth; i++) {
       const dayDate = new Date(date.getFullYear(), date.getMonth(), i);
 
-      // Get all events for this day
-      const dayFormatted = dayDate.toISOString().split("T")[0];
+      // Get all events for this day - use local date formatting
+      const dayFormatted = formatDateLocal(dayDate);
 
       // Journal entries for this day
       const journalEntries = calendarData.journals.filter(
-        (entry) =>
-          new Date(entry.date).toISOString().split("T")[0] === dayFormatted,
+        (entry) => formatDateLocal(entry.date) === dayFormatted,
       );
 
       // Habit completions for this day
@@ -83,8 +91,7 @@ export default function Calendar() {
 
       // Mood entries for this day
       const moodEntries = calendarData.moods.filter(
-        (entry) =>
-          new Date(entry.date).toISOString().split("T")[0] === dayFormatted,
+        (entry) => formatDateLocal(entry.date) === dayFormatted,
       );
 
       days.push({
