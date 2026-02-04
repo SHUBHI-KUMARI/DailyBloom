@@ -2,11 +2,9 @@ import { useState, useEffect, useCallback } from "react";
 import { useAuth } from "../contexts/AuthContext";
 import { moodAPI } from "../services/api";
 import {
-  HiOutlineEmojiHappy,
-  HiOutlineEmojiSad,
-  HiOutlineMinus,
   HiOutlineHeart,
   HiOutlineCalendar,
+  HiOutlineTrash,
 } from "react-icons/hi";
 import {
   BsEmojiLaughing,
@@ -16,6 +14,61 @@ import {
   BsEmojiAngry,
 } from "react-icons/bs";
 import "../styles/MoodTracker.css";
+
+// Helper function to format date as YYYY-MM-DD in local timezone
+const formatDateLocal = (date) => {
+  if (!date) return "";
+  const d = new Date(date);
+  if (isNaN(d.getTime())) return "";
+  const year = d.getFullYear();
+  const month = String(d.getMonth() + 1).padStart(2, "0");
+  const day = String(d.getDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
+};
+
+// Helper function to format date for display
+const formatDateDisplay = (date) => {
+  if (!date) return "Unknown date";
+  const d = new Date(date);
+  if (isNaN(d.getTime())) return "Unknown date";
+  return d.toLocaleDateString(undefined, {
+    weekday: "short",
+    month: "short",
+    day: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+};
+
+// Helper function to format date for chart labels
+const formatChartDate = (date) => {
+  if (!date) return "";
+  const d = new Date(date);
+  if (isNaN(d.getTime())) return "";
+  return d.toLocaleDateString(undefined, {
+    weekday: "short",
+    day: "numeric",
+  });
+};
+
+// Get relative time string
+const getRelativeTime = (date) => {
+  if (!date) return "";
+  const d = new Date(date);
+  if (isNaN(d.getTime())) return "";
+
+  const now = new Date();
+  const diffMs = now - d;
+  const diffMins = Math.floor(diffMs / 60000);
+  const diffHours = Math.floor(diffMs / 3600000);
+  const diffDays = Math.floor(diffMs / 86400000);
+
+  if (diffMins < 1) return "Just now";
+  if (diffMins < 60) return `${diffMins}m ago`;
+  if (diffHours < 24) return `${diffHours}h ago`;
+  if (diffDays < 7) return `${diffDays}d ago`;
+  return formatDateDisplay(date);
+};
 
 export default function MoodTracker() {
   const { currentUser } = useAuth();
@@ -103,38 +156,45 @@ export default function MoodTracker() {
     },
   ];
 
-  const formatDate = (dateString) => {
-    const options = {
-      year: "numeric",
-      month: "short",
-      day: "numeric",
-      hour: "2-digit",
-      minute: "2-digit",
-    };
-    return new Date(dateString).toLocaleDateString(undefined, options);
-  };
-
-  // Group entries by date for the mood chart
+  // Group entries by date for the mood chart (using YYYY-MM-DD keys)
   const groupEntriesByDate = () => {
     const grouped = {};
 
     moodEntries.forEach((entry) => {
-      const dateStr = new Date(entry.date).toLocaleDateString();
-      if (!grouped[dateStr]) {
-        grouped[dateStr] = [];
+      const dateKey = formatDateLocal(entry.date);
+      if (dateKey) {
+        if (!grouped[dateKey]) {
+          grouped[dateKey] = [];
+        }
+        grouped[dateKey].push(entry);
       }
-      grouped[dateStr].push(entry);
     });
 
     return grouped;
   };
 
   const groupedEntries = groupEntriesByDate();
+
+  // Generate last 14 days as YYYY-MM-DD strings
   const lastTwoWeeks = Array.from({ length: 14 }, (_, i) => {
     const date = new Date();
-    date.setDate(date.getDate() - i);
-    return date.toLocaleDateString();
-  }).reverse();
+    date.setDate(date.getDate() - (13 - i)); // Start from 13 days ago to today
+    return formatDateLocal(date);
+  });
+
+  // Delete mood entry
+  const handleDeleteEntry = async (entryId) => {
+    if (!window.confirm("Are you sure you want to delete this mood entry?")) {
+      return;
+    }
+    try {
+      await moodAPI.delete(entryId);
+      setEntriesUpdated((prev) => prev + 1);
+    } catch (error) {
+      console.error("Error deleting mood entry:", error);
+      alert("Failed to delete mood entry. Please try again.");
+    }
+  };
 
   return (
     <div className="mood-tracker-page">
@@ -184,7 +244,7 @@ export default function MoodTracker() {
               <div className="loading-state">Loading mood data...</div>
             ) : moodEntries.length === 0 ? (
               <div className="empty-state">
-                <HiOutlineEmojiHappy className="empty-icon" />
+                <BsEmojiSmile className="empty-icon" />
                 <p>You haven't logged any moods yet.</p>
                 <span>
                   Start tracking your moods to see your patterns over time.
@@ -192,52 +252,64 @@ export default function MoodTracker() {
               </div>
             ) : (
               <>
-                <div className="mood-chart">
-                  <div className="mood-chart-labels">
-                    {moods.map((mood) => {
-                      const IconComponent = mood.icon;
-                      return (
-                        <div key={mood.value} className="mood-level">
-                          <IconComponent style={{ color: mood.color }} />
-                        </div>
-                      );
-                    })}
-                  </div>
-
-                  <div className="mood-chart-grid">
-                    {lastTwoWeeks.map((dateStr) => {
-                      const dayEntries = groupedEntries[dateStr] || [];
-                      const averageMood =
-                        dayEntries.length > 0
-                          ? dayEntries.reduce((sum, entry) => {
-                              const moodValue = moods.findIndex(
-                                (m) => m.value === entry.mood,
-                              );
-                              return sum + moodValue;
-                            }, 0) / dayEntries.length
-                          : -1;
-
-                      return (
-                        <div key={dateStr} className="mood-chart-day">
-                          <div className="chart-day-date">
-                            {new Date(dateStr).toLocaleDateString(undefined, {
-                              weekday: "short",
-                              day: "numeric",
-                            })}
+                <div className="mood-chart-wrapper">
+                  <div className="mood-chart-title">Last 14 Days</div>
+                  <div className="mood-chart">
+                    <div className="mood-chart-y-axis">
+                      {moods.map((mood) => {
+                        const IconComponent = mood.icon;
+                        return (
+                          <div
+                            key={mood.value}
+                            className="mood-level"
+                            title={mood.label}
+                          >
+                            <IconComponent style={{ color: mood.color }} />
                           </div>
-                          {averageMood >= 0 && (
-                            <div
-                              className="mood-point"
-                              style={{
-                                bottom: `${(1 - averageMood / (moods.length - 1)) * 100}%`,
-                                backgroundColor:
-                                  moods[Math.round(averageMood)].color,
-                              }}
-                            />
-                          )}
-                        </div>
-                      );
-                    })}
+                        );
+                      })}
+                    </div>
+
+                    <div className="mood-chart-area">
+                      <div className="mood-chart-grid">
+                        {lastTwoWeeks.map((dateKey) => {
+                          const dayEntries = groupedEntries[dateKey] || [];
+                          const averageMood =
+                            dayEntries.length > 0
+                              ? dayEntries.reduce((sum, entry) => {
+                                  const moodValue = moods.findIndex(
+                                    (m) => m.value === entry.mood,
+                                  );
+                                  return sum + moodValue;
+                                }, 0) / dayEntries.length
+                              : -1;
+
+                          return (
+                            <div key={dateKey} className="mood-chart-day">
+                              {averageMood >= 0 && (
+                                <div
+                                  className="mood-point"
+                                  style={{
+                                    bottom: `${(1 - averageMood / (moods.length - 1)) * 100}%`,
+                                    backgroundColor:
+                                      moods[Math.round(averageMood)].color,
+                                    color: moods[Math.round(averageMood)].color,
+                                  }}
+                                  title={`${formatChartDate(dateKey)}: ${moods[Math.round(averageMood)].label}`}
+                                />
+                              )}
+                            </div>
+                          );
+                        })}
+                      </div>
+                      <div className="mood-chart-x-axis">
+                        {lastTwoWeeks.map((dateKey) => (
+                          <div key={dateKey} className="x-axis-label">
+                            {formatChartDate(dateKey)}
+                          </div>
+                        ))}
+                      </div>
+                    </div>
                   </div>
                 </div>
 
@@ -250,14 +322,32 @@ export default function MoodTracker() {
                       return (
                         <div key={entry.id} className="mood-entry-card">
                           <div className="mood-entry-header">
-                            <IconComponent
-                              className="mood-entry-icon"
-                              style={{ color: mood?.color }}
-                            />
-                            <span className="mood-entry-date">
-                              <HiOutlineCalendar />
-                              {formatDate(entry.date)}
-                            </span>
+                            <div className="mood-entry-left">
+                              <div
+                                className="mood-entry-icon-wrapper"
+                                style={{ backgroundColor: `${mood?.color}20` }}
+                              >
+                                <IconComponent
+                                  className="mood-entry-icon"
+                                  style={{ color: mood?.color }}
+                                />
+                              </div>
+                              <div className="mood-entry-info">
+                                <span className="mood-entry-label">
+                                  {mood?.label || "Unknown"}
+                                </span>
+                                <span className="mood-entry-time">
+                                  {getRelativeTime(entry.date)}
+                                </span>
+                              </div>
+                            </div>
+                            <button
+                              className="mood-entry-delete"
+                              onClick={() => handleDeleteEntry(entry.id)}
+                              title="Delete entry"
+                            >
+                              <HiOutlineTrash />
+                            </button>
                           </div>
                           {entry.note && (
                             <p className="mood-entry-note">{entry.note}</p>
@@ -274,15 +364,4 @@ export default function MoodTracker() {
       </main>
     </div>
   );
-}
-
-function getMoodColor(mood) {
-  const colors = {
-    great: "var(--mood-great)",
-    good: "var(--mood-good)",
-    neutral: "var(--mood-neutral)",
-    bad: "var(--mood-bad)",
-    awful: "var(--mood-awful)",
-  };
-  return colors[mood] || "var(--neutral-400)";
 }
