@@ -5,6 +5,7 @@ import {
   Navigate,
 } from "react-router-dom";
 import { useAuth } from "./contexts/AuthContext";
+import AppLayout from "./components/AppLayout";
 import LandingPage from "./pages/LandingPage";
 import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
@@ -21,7 +22,7 @@ function PrivateRoute({ children }) {
     return <Navigate to="/login" replace />;
   }
 
-  return children;
+  return <AppLayout>{children}</AppLayout>;
 }
 
 function PublicRoute({ children }) {

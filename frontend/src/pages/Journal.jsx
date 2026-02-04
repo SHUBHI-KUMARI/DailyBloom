@@ -1,8 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 import { useAuth } from "../contexts/AuthContext";
-import Sidebar from "../components/Sidebar";
 import RichTextEditor from "../components/RichTextEditor";
-import MobileSidebarToggle from "../components/MobileSidebarToggle";
 import { journalAPI } from "../services/api";
 import {
   HiOutlinePlus,
@@ -113,9 +111,8 @@ export default function Journal() {
   };
 
   return (
-    <div className="dashboard-layout">
-      <Sidebar />
-      <main className="dashboard-content">
+    <div className="journal-page">
+      <main className="journal-main">
         <div className="journal-container">
           <div className="journal-sidebar" id="journal-sidebar">
             <div className="journal-header">
@@ -152,11 +149,6 @@ export default function Journal() {
               )}
             </div>
           </div>
-
-          <MobileSidebarToggle
-            targetId="journal-sidebar"
-            className="toggle-journal-sidebar"
-          />
 
           <div className="journal-editor">
             <div className="editor-header">

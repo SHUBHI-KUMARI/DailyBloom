@@ -15,65 +15,6 @@
 }
 
 /* ============================================
-   App Layout (with Sidebar)
-   ============================================ */
-
-.app-layout {
-  display: flex;
-  min-height: 100vh;
-  width: 100%;
-}
-
-.app-content {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  margin-left: var(--sidebar-width);
-  min-height: 100vh;
-  transition: margin-left var(--transition-normal);
-}
-
-/* Collapsed sidebar state */
-.app-layout.sidebar-collapsed .app-content {
-  margin-left: var(--sidebar-collapsed-width);
-}
-
-/* Mobile - no margin, full width */
-@media (max-width: 768px) {
-  .app-content {
-    margin-left: 0;
-  }
-  
-  .app-layout.sidebar-collapsed .app-content {
-    margin-left: 0;
-  }
-}
-
-/* ============================================
-   Main Content Area
-   ============================================ */
-
-.main-content {
-  flex: 1;
-  padding: var(--space-6);
-  max-width: 1400px;
-  width: 100%;
-  margin: 0 auto;
-}
-
-@media (max-width: 768px) {
-  .main-content {
-    padding: var(--space-4);
-  }
-}
-
-@media (max-width: 480px) {
-  .main-content {
-    padding: var(--space-3);
-  }
-}
-
-/* ============================================
    Page Headers
    ============================================ */
 

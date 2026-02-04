@@ -231,6 +231,7 @@
   
   --sidebar-width: 280px;
   --sidebar-collapsed: 80px;
+  --sidebar-collapsed-width: var(--sidebar-collapsed);
   --header-height: 64px;
   --container-max: 1280px;
 

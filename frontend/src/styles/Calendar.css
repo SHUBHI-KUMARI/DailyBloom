@@ -2,6 +2,17 @@
    Calendar Page - Fresh Modern Design
    ============================================= */
 
+/* Page Container */
+.calendar-page {
+  width: 100%;
+  min-height: 100%;
+}
+
+.calendar-main {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
 .calendar-container {
   position: relative;
 }

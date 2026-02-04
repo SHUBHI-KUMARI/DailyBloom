@@ -2,6 +2,17 @@
    Mood Tracker Page - Fresh Modern Design
    ============================================= */
 
+/* Page Container */
+.mood-tracker-page {
+  width: 100%;
+  min-height: 100%;
+}
+
+.mood-tracker-main {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
 .mood-tracker-container {
   max-width: 900px;
 }

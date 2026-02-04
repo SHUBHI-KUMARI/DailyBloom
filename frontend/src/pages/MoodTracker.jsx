@@ -1,6 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
 import { useAuth } from "../contexts/AuthContext";
-import Sidebar from "../components/Sidebar";
 import { moodAPI } from "../services/api";
 import {
   HiOutlineEmojiHappy,
@@ -138,9 +137,8 @@ export default function MoodTracker() {
   }).reverse();
 
   return (
-    <div className="dashboard-layout">
-      <Sidebar />
-      <main className="dashboard-content">
+    <div className="mood-tracker-page">
+      <main className="mood-tracker-main">
         <div className="mood-tracker-container">
           <div className="page-header">
             <h1>Mood Tracker</h1>

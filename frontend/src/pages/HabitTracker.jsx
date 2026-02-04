@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { useAuth } from "../contexts/AuthContext";
-import Sidebar from "../components/Sidebar";
 import { habitAPI } from "../services/api";
 import {
   HiOutlinePlus,
@@ -101,9 +100,8 @@ export default function HabitTracker() {
   const last7Days = getLast7Days();
 
   return (
-    <div className="dashboard-layout">
-      <Sidebar />
-      <main className="dashboard-content">
+    <div className="habit-tracker-page">
+      <main className="habit-tracker-main">
         <div className="habit-tracker-container">
           <div className="page-header">
             <h1>Habit Tracker</h1>

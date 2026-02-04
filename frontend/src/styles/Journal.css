@@ -2,6 +2,17 @@
    Journal Page - Fresh Modern Design
    ============================================= */
 
+/* Page Container */
+.journal-page {
+  width: 100%;
+  min-height: 100%;
+}
+
+.journal-main {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
 .journal-container {
   display: flex;
   gap: var(--space-6);

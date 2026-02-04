@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
-import Sidebar from "../components/Sidebar";
 import { journalAPI, habitAPI, moodAPI } from "../services/api";
 import {
   HiOutlineBookOpen,
@@ -107,8 +106,7 @@ export default function Dashboard() {
   };
 
   return (
-    <div className="dashboard-layout">
-      <Sidebar />
+    <div className="dashboard-page">
       <main className="dashboard-content">
         {loading ? (
           <div className="loading-container">

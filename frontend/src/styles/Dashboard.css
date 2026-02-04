@@ -2,6 +2,17 @@
    Dashboard Page - Fresh Modern Design
    ============================================= */
 
+/* Page Container */
+.dashboard-page {
+  width: 100%;
+  min-height: 100%;
+}
+
+.dashboard-content {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
 /* Loading & Error States */
 .loading-container {
   display: flex;

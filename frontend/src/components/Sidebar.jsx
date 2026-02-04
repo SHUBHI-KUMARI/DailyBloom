@@ -17,44 +17,22 @@ import { RiLeafLine } from "react-icons/ri";
 import "../styles/Sidebar.css";
 
 const navItems = [
-  {
-    path: "/dashboard",
-    label: "Dashboard",
-    icon: HiOutlineHome,
-  },
-  {
-    path: "/journal",
-    label: "Journal",
-    icon: HiOutlineBookOpen,
-  },
-  {
-    path: "/habits",
-    label: "Habits",
-    icon: HiOutlineClipboardCheck,
-  },
-  {
-    path: "/mood",
-    label: "Mood",
-    icon: HiOutlineHeart,
-  },
-  {
-    path: "/calendar",
-    label: "Calendar",
-    icon: HiOutlineCalendar,
-  },
+  { path: "/dashboard", label: "Dashboard", icon: HiOutlineHome },
+  { path: "/journal", label: "Journal", icon: HiOutlineBookOpen },
+  { path: "/habits", label: "Habits", icon: HiOutlineClipboardCheck },
+  { path: "/mood", label: "Mood", icon: HiOutlineHeart },
+  { path: "/calendar", label: "Calendar", icon: HiOutlineCalendar },
 ];
 
-export default function Sidebar() {
+export default function Sidebar({ onCollapseChange, onMobileMenuChange }) {
   const { currentUser, logout } = useAuth();
   const location = useLocation();
   const [collapsed, setCollapsed] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
   useEffect(() => {
     const handleResize = () => {
       const width = window.innerWidth;
-      setWindowWidth(width);
 
       // Auto-collapse on tablet
       if (width < 1024 && width >= 768) {
@@ -75,20 +53,24 @@ export default function Sidebar() {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  // Close mobile sidebar when clicking on a link
+  // Notify parent of collapse changes
+  useEffect(() => {
+    onCollapseChange?.(collapsed);
+  }, [collapsed, onCollapseChange]);
+
+  // Notify parent of mobile menu changes
+  useEffect(() => {
+    onMobileMenuChange?.(mobileOpen);
+  }, [mobileOpen, onMobileMenuChange]);
+
   const handleNavClick = () => {
-    if (windowWidth < 768) {
+    if (window.innerWidth < 768) {
       setMobileOpen(false);
     }
   };
 
-  const toggleSidebar = () => {
-    setCollapsed(!collapsed);
-  };
-
-  const toggleMobileSidebar = () => {
-    setMobileOpen(!mobileOpen);
-  };
+  const toggleSidebar = () => setCollapsed(!collapsed);
+  const toggleMobileSidebar = () => setMobileOpen(!mobileOpen);
 
   const handleLogout = async () => {
     try {
@@ -111,12 +93,8 @@ export default function Sidebar() {
   };
 
   const getUserDisplayName = () => {
-    if (currentUser?.name) {
-      return currentUser.name;
-    }
-    if (currentUser?.email) {
-      return currentUser.email.split("@")[0];
-    }
+    if (currentUser?.name) return currentUser.name;
+    if (currentUser?.email) return currentUser.email.split("@")[0];
     return "User";
   };
 
@@ -124,15 +102,22 @@ export default function Sidebar() {
 
   return (
     <>
-      {/* Mobile Menu Toggle */}
-      <button
-        className="mobile-menu-button"
-        onClick={toggleMobileSidebar}
-        aria-label={mobileOpen ? "Close menu" : "Open menu"}
-      >
-        {mobileOpen ? <HiOutlineX /> : <HiOutlineMenuAlt2 />}
-      </button>
+      {/* Mobile Header */}
+      <header className="mobile-header">
+        <Link to="/dashboard" className="mobile-logo">
+          <RiLeafLine className="logo-icon" />
+          <span className="logo-text">DailyBloom</span>
+        </Link>
+        <button
+          className="mobile-menu-btn"
+          onClick={toggleMobileSidebar}
+          aria-label={mobileOpen ? "Close menu" : "Open menu"}
+        >
+          {mobileOpen ? <HiOutlineX /> : <HiOutlineMenuAlt2 />}
+        </button>
+      </header>
 
+      {/* Sidebar */}
       <aside className={sidebarClass}>
         {/* Header */}
         <div className="sidebar-header">
@@ -151,17 +136,9 @@ export default function Sidebar() {
 
         {/* User Profile */}
         <div className="user-profile">
-          {currentUser?.avatar ? (
-            <img
-              src={currentUser.avatar}
-              alt="Profile"
-              className="profile-pic"
-            />
-          ) : (
-            <div className="profile-pic profile-initials">
-              {getUserInitials()}
-            </div>
-          )}
+          <div className="profile-pic profile-initials">
+            {getUserInitials()}
+          </div>
           <div className="user-info">
             <p className="user-name">{getUserDisplayName()}</p>
           </div>
@@ -204,6 +181,11 @@ export default function Sidebar() {
           </button>
         </div>
       </aside>
+
+      {/* Mobile Overlay */}
+      {mobileOpen && (
+        <div className="sidebar-overlay" onClick={() => setMobileOpen(false)} />
+      )}
     </>
   );
 }

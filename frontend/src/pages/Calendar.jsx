@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { useAuth } from "../contexts/AuthContext";
-import Sidebar from "../components/Sidebar";
 import { moodAPI } from "../services/api";
 import {
   HiOutlineChevronLeft,
@@ -167,9 +166,8 @@ export default function Calendar() {
   ];
 
   return (
-    <div className="dashboard-layout">
-      <Sidebar />
-      <main className="dashboard-content">
+    <div className="calendar-page">
+      <main className="calendar-main">
         <div className="calendar-container">
           <div className="calendar-header">
             <div className="page-header">
