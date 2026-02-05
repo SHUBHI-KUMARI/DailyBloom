@@ -3,9 +3,11 @@
 A beautiful, modern wellness companion app for journaling, habit tracking, mood monitoring, and personal growth.
 
 ![DailyBloom](https://img.shields.io/badge/DailyBloom-Wellness%20App-8b5cf6?style=for-the-badge)
+![Version](https://img.shields.io/badge/Version-1.0.0-blue?style=flat-square)
 ![React](https://img.shields.io/badge/React-18.x-61dafb?style=flat-square&logo=react)
 ![Node.js](https://img.shields.io/badge/Node.js-18.x-339933?style=flat-square&logo=node.js)
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-Supabase-336791?style=flat-square&logo=postgresql)
+![License](https://img.shields.io/badge/License-MIT-green?style=flat-square)
 
 ## ✨ Features
 
