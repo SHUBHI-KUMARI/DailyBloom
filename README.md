@@ -40,6 +40,12 @@ A beautiful, modern wellness companion app for journaling, habit tracking, mood 
 - Quick actions
 - Mood and habit summaries
 
+### 🔐 Authentication
+- Email/password login
+- Google OAuth integration
+- Secure JWT tokens
+- Password hashing with bcrypt
+
 ---
 
 ## 🏗️ Project Structure
