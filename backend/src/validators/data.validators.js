@@ -149,3 +149,75 @@ export const moodStatsValidation = [
     .isInt({ min: 1, max: 365 })
     .withMessage('Days must be between 1 and 365')
 ];
+
+/**
+ * Validation rules for creating a goal
+ */
+export const createGoalValidation = [
+  body('title')
+    .trim()
+    .notEmpty()
+    .withMessage('Title is required')
+    .isLength({ max: 200 })
+    .withMessage('Title must be less than 200 characters'),
+  body('description')
+    .optional()
+    .trim()
+    .isLength({ max: 2000 })
+    .withMessage('Description must be less than 2000 characters'),
+  body('category')
+    .optional()
+    .isIn(['personal', 'health', 'career', 'learning', 'finance'])
+    .withMessage('Category must be one of: personal, health, career, learning, finance'),
+  body('targetDate')
+    .optional()
+    .isISO8601()
+    .withMessage('Target date must be a valid ISO 8601 date'),
+  body('milestones')
+    .optional()
+    .isArray()
+    .withMessage('Milestones must be an array')
+];
+
+/**
+ * Validation rules for updating a goal
+ */
+export const updateGoalValidation = [
+  param('id')
+    .notEmpty()
+    .withMessage('Goal ID is required'),
+  body('title')
+    .optional()
+    .trim()
+    .isLength({ max: 200 })
+    .withMessage('Title must be less than 200 characters'),
+  body('description')
+    .optional()
+    .trim()
+    .isLength({ max: 2000 })
+    .withMessage('Description must be less than 2000 characters'),
+  body('category')
+    .optional()
+    .isIn(['personal', 'health', 'career', 'learning', 'finance'])
+    .withMessage('Category must be one of: personal, health, career, learning, finance'),
+  body('targetDate')
+    .optional()
+    .isISO8601()
+    .withMessage('Target date must be a valid ISO 8601 date'),
+  body('status')
+    .optional()
+    .isIn(['active', 'completed', 'archived'])
+    .withMessage('Status must be one of: active, completed, archived')
+];
+
+/**
+ * Validation rules for creating a milestone
+ */
+export const createMilestoneValidation = [
+  body('title')
+    .trim()
+    .notEmpty()
+    .withMessage('Milestone title is required')
+    .isLength({ max: 200 })
+    .withMessage('Milestone title must be less than 200 characters')
+];

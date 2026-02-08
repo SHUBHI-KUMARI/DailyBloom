@@ -26,6 +26,7 @@ model User {
   journals      Journal[]
   habits        Habit[]
   moodEntries   MoodEntry[]
+  goals         Goal[]
   refreshTokens RefreshToken[]
 
   @@map("users")
@@ -104,4 +105,40 @@ model MoodEntry {
 
   @@index([userId, date])
   @@map("mood_entries")
+}
+
+// Goals with milestone tracking
+model Goal {
+  id          String    @id @default(cuid())
+  title       String
+  description String?   @db.Text
+  category    String    @default("personal") // personal, health, career, learning, finance
+  targetDate  DateTime?
+  progress    Int       @default(0) // 0-100
+  status      String    @default("active") // active, completed, archived
+  userId      String
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  user       User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  milestones Milestone[]
+
+  @@index([userId, status])
+  @@map("goals")
+}
+
+// Milestones for goals
+model Milestone {
+  id          String   @id @default(cuid())
+  title       String
+  completed   Boolean  @default(false)
+  completedAt DateTime?
+  goalId      String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  goal Goal @relation(fields: [goalId], references: [id], onDelete: Cascade)
+
+  @@index([goalId])
+  @@map("milestones")
 }
