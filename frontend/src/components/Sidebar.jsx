@@ -7,6 +7,7 @@ import {
   HiOutlineClipboardCheck,
   HiOutlineHeart,
   HiOutlineCalendar,
+  HiOutlineFlag,
   HiOutlineLogout,
   HiOutlineMenuAlt2,
   HiOutlineX,
@@ -20,6 +21,7 @@ const navItems = [
   { path: "/dashboard", label: "Dashboard", icon: HiOutlineHome },
   { path: "/journal", label: "Journal", icon: HiOutlineBookOpen },
   { path: "/habits", label: "Habits", icon: HiOutlineClipboardCheck },
+  { path: "/goals", label: "Goals", icon: HiOutlineFlag },
   { path: "/mood", label: "Mood", icon: HiOutlineHeart },
   { path: "/calendar", label: "Calendar", icon: HiOutlineCalendar },
 ];

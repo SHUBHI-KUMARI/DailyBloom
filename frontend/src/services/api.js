@@ -423,11 +423,97 @@ export const moodAPI = {
   },
 };
 
+// ============================================
+// GOALS API
+// ============================================
+
+export const goalAPI = {
+  /**
+   * Get all goals
+   */
+  getAll: async (status = 'active') => {
+    const queryString = status && status !== 'all' ? `?status=${status}` : '';
+    return apiRequest(`/goals${queryString}`);
+  },
+
+  /**
+   * Get a goal by ID
+   */
+  getById: async (id) => {
+    return apiRequest(`/goals/${id}`);
+  },
+
+  /**
+   * Get goal statistics
+   */
+  getStats: async () => {
+    return apiRequest('/goals/stats');
+  },
+
+  /**
+   * Create a goal
+   */
+  create: async (data) => {
+    return apiRequest('/goals', {
+      method: 'POST',
+      body: JSON.stringify(data),
+    });
+  },
+
+  /**
+   * Update a goal
+   */
+  update: async (id, data) => {
+    return apiRequest(`/goals/${id}`, {
+      method: 'PUT',
+      body: JSON.stringify(data),
+    });
+  },
+
+  /**
+   * Delete a goal
+   */
+  delete: async (id) => {
+    return apiRequest(`/goals/${id}`, {
+      method: 'DELETE',
+    });
+  },
+
+  /**
+   * Add a milestone to a goal
+   */
+  addMilestone: async (goalId, title) => {
+    return apiRequest(`/goals/${goalId}/milestones`, {
+      method: 'POST',
+      body: JSON.stringify({ title }),
+    });
+  },
+
+  /**
+   * Toggle milestone completion
+   */
+  toggleMilestone: async (milestoneId) => {
+    return apiRequest(`/goals/milestones/${milestoneId}/toggle`, {
+      method: 'POST',
+    });
+  },
+
+  /**
+   * Delete a milestone
+   */
+  deleteMilestone: async (milestoneId) => {
+    return apiRequest(`/goals/milestones/${milestoneId}`, {
+      method: 'DELETE',
+    });
+  },
+};
+
 export default {
   auth: authAPI,
   journal: journalAPI,
   habit: habitAPI,
   mood: moodAPI,
+  goal: goalAPI,
   setAccessToken,
   getAccessToken,
   clearAccessToken,
