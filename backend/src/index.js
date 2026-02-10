@@ -15,6 +15,7 @@ import journalRoutes from './routes/journal.routes.js';
 import habitRoutes from './routes/habit.routes.js';
 import moodRoutes from './routes/mood.routes.js';
 import goalRoutes from './routes/goal.routes.js';
+import analyticsRoutes from './routes/analytics.routes.js';
 
 // Import middleware
 import { errorHandler, notFoundHandler } from './middleware/error.middleware.js';
@@ -73,6 +74,7 @@ app.use('/api/journals', journalRoutes);
 app.use('/api/habits', habitRoutes);
 app.use('/api/moods', moodRoutes);
 app.use('/api/goals', goalRoutes);
+app.use('/api/analytics', analyticsRoutes);
 
 // 404 handler
 app.use(notFoundHandler);
