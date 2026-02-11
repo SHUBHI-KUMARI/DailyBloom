@@ -14,6 +14,7 @@ import HabitTracker from "./pages/HabitTracker";
 import Goals from "./pages/Goals";
 import MoodTracker from "./pages/MoodTracker";
 import Calendar from "./pages/Calendar";
+import Analytics from "./pages/Analytics";
 import "./App.css";
 
 function PrivateRoute({ children }) {
@@ -108,6 +109,14 @@ function App() {
             element={
               <PrivateRoute>
                 <Calendar />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/analytics"
+            element={
+              <PrivateRoute>
+                <Analytics />
               </PrivateRoute>
             }
           />

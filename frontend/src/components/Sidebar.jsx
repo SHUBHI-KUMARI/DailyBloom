@@ -8,6 +8,7 @@ import {
   HiOutlineHeart,
   HiOutlineCalendar,
   HiOutlineFlag,
+  HiOutlineChartBar,
   HiOutlineLogout,
   HiOutlineMenuAlt2,
   HiOutlineX,
@@ -24,6 +25,7 @@ const navItems = [
   { path: "/goals", label: "Goals", icon: HiOutlineFlag },
   { path: "/mood", label: "Mood", icon: HiOutlineHeart },
   { path: "/calendar", label: "Calendar", icon: HiOutlineCalendar },
+  { path: "/analytics", label: "Analytics", icon: HiOutlineChartBar },
 ];
 
 export default function Sidebar({ onCollapseChange, onMobileMenuChange }) {
