@@ -508,12 +508,33 @@ export const goalAPI = {
   },
 };
 
+// ============================================
+// ANALYTICS API
+// ============================================
+
+export const analyticsAPI = {
+  /**
+   * Get comprehensive analytics
+   */
+  getAnalytics: async (period = '30') => {
+    return apiRequest(`/analytics?period=${period}`);
+  },
+
+  /**
+   * Get weekly comparison
+   */
+  getWeeklyComparison: async () => {
+    return apiRequest('/analytics/weekly');
+  },
+};
+
 export default {
   auth: authAPI,
   journal: journalAPI,
   habit: habitAPI,
   mood: moodAPI,
   goal: goalAPI,
+  analytics: analyticsAPI,
   setAccessToken,
   getAccessToken,
   clearAccessToken,
