@@ -18,7 +18,7 @@ const router = express.Router();
  * @desc    Register a new user with email and password
  * @access  Public
  */
-router.post('/register', registerValidation, validate, async (req, res, next) => {
+router.post('/register', registerValidation, async (req, res, next) => {
   try {
     const { email, password, name } = req.body;
     const result = await authService.registerUser({ email, password, name });
