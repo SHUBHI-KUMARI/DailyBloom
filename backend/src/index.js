@@ -68,8 +68,21 @@ app.get('/health', (req, res) => {
   });
 });
 
+app.get("/health/db", async (req, res) => {
+  try {
+    await prisma.$queryRaw`SELECT 1`;
+    res.status(200).json({
+      status: "ok",
+      timestamp: new Date().toISOString(),
+    });
+  } catch (error) {
+    res.status(500).json({
+      status: "error",
+    });
+  }
+});
+
 // API routes
-'api/auth/register'
 app.use('/api/auth', authRoutes);
 app.use('/api/journals', journalRoutes);
 app.use('/api/habits', habitRoutes);
